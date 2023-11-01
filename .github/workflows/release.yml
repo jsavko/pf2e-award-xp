@@ -23,7 +23,7 @@ jobs:
         id: sub_release_manifest_version
         uses: rajbos-actions/variable-substitution@v1.1
         with:
-          files: './${{github.event.repository.name}}/module.json'
+          files: 'module.json'
          
         env:
           version: ${{github.event.release.tag_name}}    
@@ -35,7 +35,7 @@ jobs:
         id: sub_prerelease_manifest_version
         uses: rajbos-actions/variable-substitution@v1.1
         with:
-          files: './${{github.event.repository.name}}/module.json'
+          files: 'module.json'
          
         env:
           version: ${{github.event.release.tag_name}}
@@ -57,6 +57,6 @@ jobs:
           draft: false
           prerelease: false
           token: ${{ secrets.GITHUB_TOKEN }}
-          artifacts: './${{github.event.repository.name}}/module.json, ./${{github.event.repository.name}}/module.zip'
+          artifacts: 'module.json, module.zip'
           tag: ${{ github.event.release.tag_name }}
           body: ${{ github.event.release.body }}
