@@ -1,46 +1,62 @@
 name: Release Creation
+
 on:
-    release:
-        types: [published]
+  release:
+    types: [published]
+
 jobs:
-    build:
-        runs-on: ubuntu-latest
-        strategy:
-            matrix:
-                node-version: [20.x]
-        permissions:
-            contents: write
-        steps:
-            - uses: actions/checkout@v3
-            # Substitute existing the Manifest and Download URLs in the module.json for pre-release (unprotected) builds
-            # for a FULL RELEASE
-            - name: Substitute Manifest and Download Links For Versioned Ones
-                if: "github.event.release.prerelease"
-                id: sub_prerelease_manifest_version
-                uses: rajbos-actions/variable-substitution@v1.1
-                with:
-                    files: './${{github.event.repository.name}}/module.json'
-                
-                env:
-                    version: ${{github.event.release.tag_name}}
-                    url: https://github.com/${{github.repository}}
-                    manifest: https://github.com/${{github.repository}}/releases/latest/download/module.json
-                    download: https://github.com/${{github.repository}}/releases/download/${{github.event.release.tag_name}}/module.zip  
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [20.x]
+    permissions:
+      contents: write
+    steps:
 
-            # Create a zip file with all files required by the module to add to the release
-            - run: zip -r ./module.zip module.json pf2e-awardxp.js LICENSE
+      - uses: actions/checkout@v3 
 
-            # Create a release for this specific version
-            - name: Update Release with Files
-                if: "!github.event.release.prerelease"
-                id: create_version_release
-                uses: ncipollo/release-action@v1.12.0
-                with:
-                allowUpdates: true # Set this to false if you want to prevent updating existing releases
-                name: ${{ github.event.release.name }}
-                draft: false
-                prerelease: false
-                token: ${{ secrets.GITHUB_TOKEN }}
-                artifacts: './dist/${{github.event.repository.name}}/module.json, ./dist/${{github.event.repository.name}}/module.zip'
-                tag: ${{ github.event.release.tag_name }}
-                body: ${{ github.event.release.body }}
+      # Only update the version, as full releases are protected
+      # for a FULL RELEASE
+      - name: Substitute Manifest and Download Links For Versioned Ones
+        if: "!github.event.release.prerelease"
+        id: sub_release_manifest_version
+        uses: rajbos-actions/variable-substitution@v1.1
+        with:
+          files: './${{github.event.repository.name}}/module.json'
+         
+        env:
+          version: ${{github.event.release.tag_name}}    
+      
+      # Substitute existing the Manifest and Download URLs in the module.json for pre-release (unprotected) builds
+      # for a FULL RELEASE
+      - name: Substitute Manifest and Download Links For Versioned Ones
+        if: "github.event.release.prerelease"
+        id: sub_prerelease_manifest_version
+        uses: rajbos-actions/variable-substitution@v1.1
+        with:
+          files: './${{github.event.repository.name}}/module.json'
+         
+        env:
+          version: ${{github.event.release.tag_name}}
+          url: https://github.com/${{github.repository}}
+          manifest: https://github.com/${{github.repository}}/releases/latest/download/module.json
+          download: https://github.com/${{github.repository}}/releases/download/${{github.event.release.tag_name}}/module.zip  
+
+      # Create a zip file with all files required by the module to add to the release
+      - run: zip -r ./module.zip module.json pf2e-awardxp.js LICENSE
+
+      # Create a release for this specific version
+      - name: Update Release with Files
+        if: "!github.event.release.prerelease"
+        id: create_version_release
+        uses: ncipollo/release-action@v1.12.0
+        with:
+          allowUpdates: true # Set this to false if you want to prevent updating existing releases
+          name: ${{ github.event.release.name }}
+          draft: false
+          prerelease: false
+          token: ${{ secrets.GITHUB_TOKEN }}
+          artifacts: './${{github.event.repository.name}}/module.json, ./${{github.event.repository.name}}/module.zip'
+          tag: ${{ github.event.release.tag_name }}
+          body: ${{ github.event.release.body }}
