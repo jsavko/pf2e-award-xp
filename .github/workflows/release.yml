@@ -1,9 +1,7 @@
 name: Release Creation
-
 on:
     release:
         types: [published]
-
 jobs:
     build:
         runs-on: ubuntu-latest
@@ -14,7 +12,6 @@ jobs:
             contents: write
         steps:
             - uses: actions/checkout@v3
-
             # Substitute existing the Manifest and Download URLs in the module.json for pre-release (unprotected) builds
             # for a FULL RELEASE
             - name: Substitute Manifest and Download Links For Versioned Ones
@@ -22,13 +19,13 @@ jobs:
                 id: sub_prerelease_manifest_version
                 uses: rajbos-actions/variable-substitution@v1.1
                 with:
-                files: './dist/${{github.event.repository.name}}/module.json'
+                    files: './${{github.event.repository.name}}/module.json'
                 
                 env:
-                version: ${{github.event.release.tag_name}}
-                url: https://github.com/${{github.repository}}
-                manifest: https://github.com/${{github.repository}}/releases/latest/download/module.json
-                download: https://github.com/${{github.repository}}/releases/download/${{github.event.release.tag_name}}/module.zip  
+                    version: ${{github.event.release.tag_name}}
+                    url: https://github.com/${{github.repository}}
+                    manifest: https://github.com/${{github.repository}}/releases/latest/download/module.json
+                    download: https://github.com/${{github.repository}}/releases/download/${{github.event.release.tag_name}}/module.zip  
 
             # Create a zip file with all files required by the module to add to the release
             - run: zip -r ./module.zip module.json pf2e-awardxp.js LICENSE
