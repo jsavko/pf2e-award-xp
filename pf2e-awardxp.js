@@ -8,13 +8,12 @@ Hooks.on('preDeleteCombat', (combat,html,id) => {
         combat.combatants.filter(c => c.actor.type === "hazard").map(c => c.actor.system.details.level.value),
         {}
     )
-    console.log(calulatedXP)
     game.pf2e_awardxp.openDialog(pcs, calulatedXP.xpPerPlayer, 'Encounter (' + calulatedXP.rating.charAt(0).toUpperCase() +  calulatedXP.rating.slice(1) + ')' )
 })
 
 
 Hooks.once("init", async () => {
-    console.log('Init Hook fired! ')
+    console.log('PF2E Award XP Init')
     game.pf2e_awardxp = {openDialog: pf2e_awardxp_dialog}
 });
 
