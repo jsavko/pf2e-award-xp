@@ -15,23 +15,8 @@ jobs:
     steps:
 
       - uses: actions/checkout@v3 
-
-      # Only update the version, as full releases are protected
-      # for a FULL RELEASE
+      # Substitute existing the Manifest and Download URLs in the module.json 
       - name: Substitute Manifest and Download Links For Versioned Ones
-        if: "!github.event.release.prerelease"
-        id: sub_release_manifest_version
-        uses: rajbos-actions/variable-substitution@v1.1
-        with:
-          files: 'module.json'
-         
-        env:
-          version: ${{github.event.release.tag_name}}    
-      
-      # Substitute existing the Manifest and Download URLs in the module.json for pre-release (unprotected) builds
-      # for a FULL RELEASE
-      - name: Substitute Manifest and Download Links For Versioned Ones
-        if: "github.event.release.prerelease"
         id: sub_prerelease_manifest_version
         uses: rajbos-actions/variable-substitution@v1.1
         with:
