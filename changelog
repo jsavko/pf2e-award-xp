@@ -1,0 +1,6 @@
+0.1.1
+Updated `openDialog` method to allow passing of options as an object
+Updated AwardXP Dialog window for custom descriptions.
+You may now call `game.pf2e_awardxp.openDialog()` to open the dialog directly
+
+0.1.0 Initial Release
