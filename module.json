@@ -1,7 +1,7 @@
 {
   "id": "pf2e-award-xp",
   "title": "pf2e award xp",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "compatibility": {
     "minimum": "11",
     "verified": "11"
@@ -15,7 +15,9 @@
       }
     ]
   },
-  "esmodules": ["pf2e-awardxp.js"],
+  "esmodules": [
+    "pf2e-awardxp.js"
+  ],
   "authors": [
     {
       "name": "LostPhoenix",
@@ -23,6 +25,6 @@
       "flags": {}
     }
   ],
-  "manifest": "https://raw.githubusercontent.com/jsavko/pf2e-award-xp/main/module.json",
-  "download": "https://github.com/jsavko/pf2e-award-xp/archive/refs/heads/main.zip"
+  "manifest": "https://github.com/jsavko/pf2e-award-xp/releases/latest/download/module.json",
+  "download": "https://github.com/jsavko/pf2e-award-xp/releases/download/0.1.2/module.zip"
 }

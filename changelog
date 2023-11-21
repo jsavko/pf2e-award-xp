@@ -1,3 +1,9 @@
+0.1.2
+Added Kingdom XP Dialog at `game.pf2e_awardxp.openKingdomDialog()`
+Renamed `game.pf2e_awardxp.openDialog()` to `game.pf2e_awardxp.openPlayerDialog()`
+    * `game.pf2e_awardxp.openDialog()` will continue to work for the time being.
+Added an icon and reformed the XP ChatMessage
+
 0.1.1
 Updated `openDialog` method to allow passing of options as an object
 Updated AwardXP Dialog window for custom descriptions.
