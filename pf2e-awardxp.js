@@ -370,19 +370,17 @@ class Award extends FormApplication {
         if(data['award-type'] != "Custom") {data.description = data['award-type'];}
         const destinations = []
         for (const actor in data.destination){ 
-            if (data.destination[actor] == true) destinations.push(actor)
+            if (data.destination[actor] == true) destinations.push(game.actors.get(actor))
         }
         this.close();
         await this.constructor.awardXP(data.xp, destinations)
-        //this.constructor.displayAwardMessages(results);
+        this.constructor.displayAwardMessages(data.xp, data.description, destinations);
     }
     
-
     static async awardXP(amount, destinations){
         if ( !amount || !destinations.length ) return;
         for ( const destination of destinations ) {
-            const actor = game.actors.get(destination);
-            await actor.update({'system.details.xp.value': actor.system.details.xp.value + amount})
+            await destination.update({'system.details.xp.value': destination.system.details.xp.value + amount})
         }
     }
     static async displayAwardMessages(amount, description, destinations) {
@@ -402,7 +400,7 @@ class Award extends FormApplication {
         }
         return ChatMessage.create(messageData, {});
     }
-    
+
   /* -------------------------------------------- */
   /*  Event Handling                              */
   /* -------------------------------------------- */
