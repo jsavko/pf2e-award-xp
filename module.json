@@ -18,11 +18,22 @@
   "esmodules": [
     "pf2e-awardxp.js"
   ],
+  "styles": [
+    "pf2e-awardxp.css"
+],
   "authors": [
     {
       "name": "LostPhoenix",
       "discord": "lostphoenix._.",
       "flags": {}
+    }
+  ],
+  "languages": [
+    {
+        "lang": "en",
+        "name": "English",
+        "path": "lang/en.json",
+        "flags": {}
     }
   ],
   "manifest": "https://github.com/jsavko/pf2e-award-xp/releases/latest/download/module.json",
