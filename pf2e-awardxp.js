@@ -39,10 +39,8 @@ CONFIG.TextEditor.enrichers.push({
     enricher: enrichAward
 })
 
-//document.body.addEventListener("click", awardAction);
+document.body.addEventListener("click", awardAction);
 }
-
-
 
 /* -------------------------------------------- */
 /*  Enrichers                                   */
@@ -76,56 +74,20 @@ async function enrichAward(match, options) {
     let { type, config, label } = match.groups;
     config = parseConfig(config);
     config._input = match[0];
-   console.log(type)
-   console.log(config)
-   console.log(label)
-    return null;
-  }
+   const command = config._config;
 
-  async function enrichAwards(config, label, options) {
-    const command = config._config;
-    let parsed;
-    try {
-      parsed = Award.parseAwardCommand(command);
-    } catch(err) {
-      console.warn(err.message);
-      return null;
-    }
-  
-    const block = document.createElement("span");
-    block.classList.add("award-block", "dnd5e2");
-    block.dataset.awardCommand = command;
-  
-    const entries = [];
-    for ( let [key, amount] of Object.entries(parsed.currency) ) {
-      const label = CONFIG.DND5E.currencies[key].label;
-      amount = Number.isNumeric(amount) ? formatNumber(amount) : amount;
-      entries.push(`
-        <span class="award-entry">
-          ${amount} <i class="currency ${key}" data-tooltip="${label}" aria-label="${label}"></i>
-        </span>
-      `);
-    }
-    if ( parsed.xp ) entries.push(`
-      <span class="award-entry">
-        ${formatNumber(parsed.xp)} ${game.i18n.localize("DND5E.ExperiencePointsAbbr")}
-      </span>
-    `);
-  
-    let award = game.i18n.getListFormatter({ type: "unit" }).format(entries);
-    if ( parsed.each ) award = game.i18n.format("EDITOR.DND5E.Inline.AwardEach", { award });
-  
-    block.innerHTML += `
-      ${award}
-      <a class="award-link" data-action="awardRequest">
-        <i class="fa-solid fa-trophy"></i> ${label ?? game.i18n.localize("DND5E.Award.Action")}
-      </a>
-    `;
-  
+   const block = document.createElement("span");
+   block.classList.add("award-block", "pf2eaxp");
+   block.dataset.awardCommand = command;
+ 
+   block.innerHTML += `<a class="award-link" data-action="awardRequest">
+     <i class="fa-solid fa-trophy"></i> ${label ?? game.i18n.localize("PF2EAXP.Award.Action")}
+   </a>
+ `;
+
     return block;
   }
-  
-  
+
   /* -------------------------------------------- */
 
 
@@ -137,6 +99,7 @@ async function enrichAward(match, options) {
  * Forward clicks on award requests to the Award application.
  * @param {Event} event  The click event triggering the action.
  * @returns {Promise|void}
+ */
 
 async function awardAction(event) {
     const target = event.target.closest('[data-action="awardRequest"]');
@@ -146,7 +109,7 @@ async function awardAction(event) {
     Award.handleAward(command);
   }
   
- */
+
 
 function pf2e_awardxp_dialog_kingdom(options = {}) {
     if (!game.actors.party.campaign.active) {
