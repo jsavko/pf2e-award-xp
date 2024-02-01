@@ -7,7 +7,7 @@
                 <option value="Custom" data-xp="{{xp}}">{{localize "PF2EAXP.Award.DescriptionPlaceholder"}}</option>
                 {{#if description}}
                 <option selected value="{{description}}" data-xp="{{xp}}">{{description}}</option>
-                 {{/if}}
+                {{/if}}
                 <option value="{{localize "PF2EAXP.Award.Encounters.Trivial"}}" data-xp="40">{{localize "PF2EAXP.Award.Encounters.Trivial"}} 40 {{localize "PF2EAXP.Award.Exp"}}</option>
                 <option value="{{localize "PF2EAXP.Award.Encounters.Low"}}" data-xp="60">{{localize "PF2EAXP.Award.Encounters.Low"}} 60 {{localize "PF2EAXP.Award.Exp"}}</option>
                 <option value="{{localize "PF2EAXP.Award.Encounters.Moderate"}}" data-xp="80">{{localize "PF2EAXP.Award.Encounters.Moderate"}} 80 {{localize "PF2EAXP.Award.Exp"}}</option>
@@ -30,6 +30,7 @@
             <label>{{localize "PF2EAXP.Award.Description"}}:</label>
             <input name="description" type="text" inputmode="text" placeholder="{{localize "PF2EAXP.Award.DescriptionPlaceholder"}}" value="{{description}}">
         </div>
+        <div>
         <p><b>{{localize "PF2EAXP.Award.Destination"}}</b>: <br/><br/></p>  
         </div>
 

@@ -14,6 +14,8 @@ Hooks.on('preDeleteCombat', (combat,html,id) => {
     )
     const award = new game.pf2e_awardxp.Award(null,{destinations:pcs, description:'Encounter (' + calulatedXP.rating.charAt(0).toUpperCase() +  calulatedXP.rating.slice(1) + ')', xp:calulatedXP.xpPerPlayer});
     award.render(true);
+
+    //game.pf2e_awardxp.openDialog({actors: pcs, award: calulatedXP.xpPerPlayer, description: 'Encounter (' + calulatedXP.rating.charAt(0).toUpperCase() +  calulatedXP.rating.slice(1) + ')' })
 })
 
 
@@ -372,7 +374,7 @@ class Award extends FormApplication {
         }
         this.close();
         await this.constructor.awardXP(data.xp, destinations)
-        //this.constructor.displayAwardMessages(data.xp, data.description,destinations);
+        //this.constructor.displayAwardMessages(results);
     }
     
 
@@ -383,8 +385,24 @@ class Award extends FormApplication {
             await actor.update({'system.details.xp.value': actor.system.details.xp.value + amount})
         }
     }
-
-
+    static async displayAwardMessages(amount, description, destinations) {
+        const context = {
+            xp: amount,
+            description: description,
+            destinations:destinations
+        }
+        const content = await renderTemplate("modules/pf2e-award-xp/templates/chat/party.hbs", context);
+    
+        const messageData = {
+          type: CONST.CHAT_MESSAGE_TYPES["OTHER"],
+          content: content,
+          speaker: ChatMessage.getSpeaker({actor: this.parent}),
+          rolls: null,
+    
+        }
+        return ChatMessage.create(messageData, {});
+    }
+    
   /* -------------------------------------------- */
   /*  Event Handling                              */
   /* -------------------------------------------- */
@@ -393,8 +411,8 @@ class Award extends FormApplication {
   activateListeners(html) {
     super.activateListeners(html);
     this._validateForm();
-
-      html.find('[name=award-type]').on( "load", function() {
+    
+    html.find('[name=award-type]').on( "change", function() {
         html.find('[name=xp]')[0].value = this.selectedOptions[0].getAttribute("data-xp");
         if (this.selectedOptions[0].value == "Custom"){
             $(".pf2e_awardxp_description").css("visibility", "visible");
