@@ -356,7 +356,7 @@ class Award extends FormApplication {
                 });
                 ChatMessage.implementation.createDocuments(chatData);
                 //Set flag to not send message again
-                //game.settings.set("pf2e-award-xp", "welcomeMessageShown", true)
+                game.settings.set("pf2e-award-xp", "welcomeMessageShown", true)
             }
         }
 
