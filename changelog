@@ -2,7 +2,10 @@
 Refactored into proper Application Model
 Added text enrichers for Reward Application [[/award value description]]
 Added Localization for all text
-Added chat command /award {optional valuie} {optional description}
+Added chat command /award {optional value} {optional description}
+Removed Kingdom XP Dialog 
+Added shim for `game.pf2e_awardxp.openDialog()` and `game.pf2e_awardxp.openPlayerDialog()`
+
 
 0.1.3
 Added Kingdom XP Dialog at `game.pf2e_awardxp.openKingdomDialog()`
