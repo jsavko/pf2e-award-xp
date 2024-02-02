@@ -36,8 +36,6 @@ Hooks.once("init", async () => {
 
 
 Hooks.once("ready", async () => {
-    console.log("PF2E Award XP Welcome");
-    ui.notifications.warn("ready")
     game.pf2e_awardxp.Award._welcomeMessage();
 });
 
@@ -93,7 +91,6 @@ function parseConfig(match) {
 
 
 async function enrichAward(match, options) {
-    console.log('enrich')
     let { type, config, label } = match.groups;
     config = parseConfig(config);
     config._input = match[0];
@@ -425,7 +422,6 @@ class Award extends FormApplication {
   static _welcomeMessage() {
         if (!game.settings.get("pf2e-award-xp", "welcomeMessageShown")) {
             if (game.user.isGM) {
-                console.log('send welcome message')
                 const content = [`
                 <div class="pf2eawardxp">
                     <h3 class="nue">${game.i18n.localize("PF2EAXP.Welcome.Title")}</h3>
