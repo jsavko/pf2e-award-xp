@@ -5,6 +5,8 @@
 /**
  * Open dialog at when the preDeleteCombat hook is fired.
  */
+
+
 Hooks.on('preDeleteCombat', (combat,html,id) => {
     if (!game.user.isGM) return
     const pcs = combat.combatants.filter(c => c.actor.type==='character').map(c => c.actor)
@@ -27,11 +29,20 @@ Hooks.once("init", async () => {
                         openKingdomDialog: pf2e_awardxp_dialog_kingdom,
                         Award: Award
                         }
-    registerCustomEnrichers()
+    registerCustomEnrichers();
+    registerWorldSettings();
+
 });
 
-Hooks.on("chatMessage", (app, message, data) => game.pf2e_awardxp.Award.chatMessage(message));
 
+Hooks.once("ready", async () => {
+    console.log("PF2E Award XP Welcome");
+    ui.notifications.warn("ready")
+    game.pf2e_awardxp.Award._welcomeMessage();
+});
+
+
+Hooks.on("chatMessage", (app, message, data) => game.pf2e_awardxp.Award.chatMessage(message));
 
 export function registerCustomEnrichers() {
 CONFIG.TextEditor.enrichers.push({
@@ -41,6 +52,18 @@ CONFIG.TextEditor.enrichers.push({
 
 document.body.addEventListener("click", awardAction);
 }
+
+export function registerWorldSettings() { 
+    game.settings.register("pf2e-award-xp", "welcomeMessageShown", {
+        scope: "world",
+        name: "welcomeMessageShown",
+        hint: "welcomeMessageShown",
+        config: false,
+        type: Boolean,
+        default: false
+    });
+}
+
 
 /* -------------------------------------------- */
 /*  Enrichers                                   */
@@ -238,8 +261,11 @@ class Award extends FormApplication {
             if (data.destination[actor] == true) destinations.push(game.actors.get(actor))
         }
         this.close();
-        await this.constructor.awardXP(data.xp, destinations)
-        this.constructor.displayAwardMessages(data.xp, data.description, destinations);
+        if (game.user.isGM){
+            await this.constructor.awardXP(data.xp, destinations)
+            await this.constructor.displayAwardMessages(data.xp, data.description, destinations);
+        }
+
     }
     
     /**
@@ -394,5 +420,46 @@ class Award extends FormApplication {
     award.render(true);
 
   }
+
+
+  static _welcomeMessage() {
+        if (!game.settings.get("pf2e-award-xp", "welcomeMessageShown")) {
+            if (game.user.isGM) {
+                console.log('send welcome message')
+                const content = [`
+                <div class="pf2eawardxp">
+                    <h3 class="nue">${game.i18n.localize("PF2EAXP.Welcome.Title")}</h3>
+                    <p class="nue">${game.i18n.localize("PF2EAXP.Welcome.WelcomeMessage1")}</p>
+                    <p class="nue">${game.i18n.localize("PF2EAXP.Welcome.WelcomeMessage2")}</p>
+                    <p>
+                        ${game.i18n.localize("PF2EAXP.Welcome.WelcomeEnricherJank")}
+                    </p>
+                    <p>
+                        ${game.i18n.localize("PF2EAXP.Welcome.WelcomeEnricher")}
+                    </p>
+                    <p class="nue">${game.i18n.localize("PF2EAXP.Welcome.WelcomeMessage3")}</p>
+                    <p>
+                        ${game.i18n.localize("PF2EAXP.Welcome.WelcomeCommand")}
+                    </p>
+                    <p class="nue"></p>
+                    <footer class="nue"></footer>
+                </div>
+                `];
+                const chatData = content.map(c => {
+                    return {
+                        whisper: [game.user.id],
+                        speaker: { alias: "PF2E Award Exp" },
+                        flags: { core: { canPopout: true } },
+                        content: c
+                    };
+                });
+                ChatMessage.implementation.createDocuments(chatData);
+                //Set flag to not send message again
+                //game.settings.set("pf2e-award-xp", "welcomeMessageShown", true)
+            }
+        }
+
+  }
+
 
 }

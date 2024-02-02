@@ -26,6 +26,15 @@
       "Description":"Description",
       "DescriptionPlaceholder": "Custom Description",
       "Destination": "Recipients"
+    },
+    "PF2EAXP.Welcome":{
+      "Title":"Award Enrichers and Command",
+      "WelcomeMessage1":"It seems you're using PF2E Award Exp for the first time.",
+      "WelcomeMessage2": "You can now use the text enricher in Journals and chat message",
+      "WelcomeEnricher": "will produce [[/award 10 Accomplishment (Minor)]]{Minor Accomplishment}",
+      "WelcomeEnricherJank": "[[/aw<span></span>ard 10 Accomplishment (Minor)]]{Minor Accomplishment}",
+      "WelcomeMessage3": "To open the Award menu you may also use the chat command with optional arguments",
+      "WelcomeCommand":"/award 10 Accomplishment (Minor)"
     }
 }
     
