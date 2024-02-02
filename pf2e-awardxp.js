@@ -434,6 +434,7 @@ class Award extends FormApplication {
                     <p>
                         ${game.i18n.localize("PF2EAXP.Welcome.WelcomeEnricherJank")}
                     </p>
+                    <p class="nue">${game.i18n.localize("PF2EAXP.Welcome.WelcomeMessageOutput")}</p>
                     <p>
                         ${game.i18n.localize("PF2EAXP.Welcome.WelcomeEnricher")}
                     </p>
