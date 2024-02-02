@@ -110,7 +110,7 @@ async function awardAction(event) {
   }
   
 
-
+//This needs to be refactored and removed. 
 function pf2e_awardxp_dialog_kingdom(options = {}) {
     if (!game.actors.party.campaign.active) {
         ui.notifications.error("You can not award Kingdom Experience before the kingdom is founded.");
@@ -255,12 +255,11 @@ class Award extends FormApplication {
     }
 
     /**
-    * Parse the award command and grant an award.
+    * Send the ChatMessage from the template file.
     * @param {integer} amount  value of EXP to grant.
     * @param {string} description  text description to be displayed in chatMessage.
     * @param {array[actors]} destinations  text description to be displayed in chatMessage.
     */
-
     static async displayAwardMessages(amount, description, destinations) {
         const context = {
             xp: amount,
@@ -314,7 +313,6 @@ class Award extends FormApplication {
     //if ( !filteredKeys(data.destination ?? {}).length ) valid = false;
     this.form.querySelector('button[name="transfer"]').disabled = !valid;
   }
-
 
 
   /* -------------------------------------------- */
@@ -385,6 +383,11 @@ class Award extends FormApplication {
    * Use the `openDialog` method is a shim to removed in a furture update.
    */ 
   static openDialog(options={}) { 
+    if ( !game.user.isGM ) {
+        ui.notifications.error("PF2EAXP.Award.NotGMError", { localize: true });
+        return;
+      }
+      
     let xp = options.award ?? null;
     let description = options.description ?? null;
     const award = new game.pf2e_awardxp.Award(null,{xp:xp, description:description});
