@@ -1,3 +1,9 @@
+1.0.0
+Refactored into proper Application Model
+Added text enrichers for Reward Application [[/award value description]]
+Added Localization for all text
+Added chat command /award {optional valuie} {optional description}
+
 0.1.3
 Added Kingdom XP Dialog at `game.pf2e_awardxp.openKingdomDialog()`
 Renamed `game.pf2e_awardxp.openDialog()` to `game.pf2e_awardxp.openPlayerDialog()`
