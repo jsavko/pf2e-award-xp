@@ -1,11 +1,11 @@
 <div class="pf2eawardxp">
     <div class="pf2eawardxp xp-block">
         <img src="modules/pf2e-award-xp/assets/exp64.png" class="pf2eawardxp xp-image">
-        <p class="pf2eawardxp xp-text">The Party gained {{xp}} XP for {{description}}</p>
+        <p class="pf2eawardxp xp-text">{{message}}</p>
     </div>
 
     <div class="pf2eawardxp recipients-block">
-        Recipients:
+        {{localize "PF2EAXP.Award.Destination"}}:
         <ul class="pf2eawardxp recipient-list">
             {{#each destinations}}
                 <li>{{name}}</li>

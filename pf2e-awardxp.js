@@ -189,8 +189,8 @@ class Award extends FormApplication {
     */
     static async displayAwardMessages(amount, description, destinations) {
         const context = {
-            xp: amount,
-            description: description,
+            message: game.i18n.format("PF2EAXP.Award.Message",
+            {name: game.actors.party.name, award: amount, description: description }),
             destinations:destinations
         }
         const content = await renderTemplate("modules/pf2e-award-xp/templates/chat/party.hbs", context);
