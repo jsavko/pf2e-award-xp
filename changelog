@@ -1,6 +1,7 @@
 1.0.1
 Added Missing Localization on award ChatMessage
-
+Fixed EXP grant bug to non character actors. (Submitted by Sevaarcen)
+Added error message when applying XP to invalid actor
 
 1.0.0
 Refactored into proper Application Model
