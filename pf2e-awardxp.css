@@ -32,6 +32,11 @@
     margin-bottom: 5px; /* Adjust the margin as needed */
 }
 
+.hero .name { 
+    min-width: 20px;
+    display: block;
+}
+
 
 .pf2eawardxp .form-group {
     display: flex;

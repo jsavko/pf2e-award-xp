@@ -2,6 +2,8 @@
 Added Missing Localization on award ChatMessage
 Fixed EXP grant bug to non character actors. (Submitted by Sevaarcen)
 Added error message when applying XP to invalid actor
+Added logging for granting XP 
+Fixed a CSS issue with small names on award application window
 
 1.0.0
 Refactored into proper Application Model
