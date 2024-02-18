@@ -149,7 +149,7 @@ class Award extends FormApplication {
         const context = super.getData(options);
         context.xp = this.options.xp ?? 0;
         context.description = this.options.description ?? null;
-        context.destinations = this.options.destinations.length > 0 ? this.options.destinations : game.actors.party.members;
+        context.destinations = this.options.destinations.length > 0 ? this.options.destinations : game.actors.party.members.filter(m => m.type === "character");
         return context;
       }
 
