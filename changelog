@@ -1,3 +1,7 @@
+1.0.1
+Added Missing Localization on award ChatMessage
+
+
 1.0.0
 Refactored into proper Application Model
 Added text enrichers for Reward Application [[/award value description]]
