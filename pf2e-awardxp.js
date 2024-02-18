@@ -149,13 +149,15 @@ class Award extends FormApplication {
         const context = super.getData(options);
         context.xp = this.options.xp ?? 0;
         context.description = this.options.description ?? null;
-        context.destinations = this.options.destinations.length > 0 ? this.options.destinations : game.actors.party.members;
+        context.destinations = this.options.destinations.length > 0 ? this.options.destinations : game.actors.party.members.filter(m => m.type === "character");
         return context;
       }
 
     /** @inheritdoc */
     async _updateObject(event, formData) {
         const data = foundry.utils.expandObject(formData);
+        this.form.querySelector('button[name="transfer"]').disabled = true;
+
         if(data['award-type'] != "Custom") {data.description = data['award-type'];}
         const destinations = []
         for (const actor in data.destination){ 
@@ -177,7 +179,12 @@ class Award extends FormApplication {
     static async awardXP(amount, destinations){
         if ( !amount || !destinations.length ) return;
         for ( const destination of destinations ) {
+          try {
+            console.log(`PFPF2E Award XP - ${destination.name} - ${destination.system.details.xp.value}(starting) +  ${amount} (award) = ${destination.system.details.xp.value + amount} (total)`)
             await destination.update({'system.details.xp.value': destination.system.details.xp.value + amount})
+          } catch(err) {
+            ui.notifications.warn(destination.name + ": " + err.message);
+          }
         }
     }
 
@@ -189,8 +196,8 @@ class Award extends FormApplication {
     */
     static async displayAwardMessages(amount, description, destinations) {
         const context = {
-            xp: amount,
-            description: description,
+            message: game.i18n.format("PF2EAXP.Award.Message",
+            {name: game.actors.party.name, award: amount, description: description }),
             destinations:destinations
         }
         const content = await renderTemplate("modules/pf2e-award-xp/templates/chat/party.hbs", context);
@@ -223,6 +230,8 @@ class Award extends FormApplication {
         }
       } );
 
+      
+
   }
 
   /* -------------------------------------------- */
@@ -236,10 +245,9 @@ class Award extends FormApplication {
   _validateForm() {
     const data = foundry.utils.expandObject(this._getSubmitData());
     let valid = true;
-    //if ( !filteredKeys(data.amount ?? {}).length && !data.xp ) valid = false;
-    //if ( !filteredKeys(data.destination ?? {}).length ) valid = false;
     this.form.querySelector('button[name="transfer"]').disabled = !valid;
   }
+
 
 
   /* -------------------------------------------- */
