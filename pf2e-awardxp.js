@@ -9,7 +9,7 @@
 
 Hooks.on('preDeleteCombat', (combat,html,id) => {
     if (!game.user.isGM) return
-    const pcs = combat.combatants.filter(c => c.actor.type==='character').map(c => c.actor)
+    const pcs = combat.combatants.filter(c => c.actor.type==='character' && !c.actor.traits.has('eidolon') && !c.actor.traits.has('minion')).map(c => c.actor)
     let calulatedXP = game.pf2e.gm.calculateXP(
         pcs[0].system.details.level.value,
         pcs.length,
@@ -148,8 +148,8 @@ class Award extends FormApplication {
       getData(options={}) {
         const context = super.getData(options);
         context.xp = this.options.xp ?? 0;
-        context.description = this.options.description ?? null;
-        context.destinations = this.options.destinations.length > 0 ? this.options.destinations : game.actors.party.members.filter(m => m.type === "character");
+        context.description = this.options.description ?? null;       
+        context.destinations = this.options.destinations.length > 0 ? this.options.destinations : game.actors.party.members.filter(m => m.type === "character" &&  !m.traits.has('eidolon') && !m.traits.has('minion'));
         return context;
       }
 
