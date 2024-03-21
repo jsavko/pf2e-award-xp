@@ -9,13 +9,14 @@
 
 Hooks.on('preDeleteCombat', (combat,html,id) => {
     if (!game.user.isGM) return
-    const pcs = combat.combatants.filter(c => c.actor.type==='character' && !c.actor.traits.has('eidolon') && !c.actor.traits.has('minion')).map(c => c.actor)
+    const pcs = combat.combatants.filter(c => c.actor.type==='character' && c.actor.alliance === 'party' && !c.actor.traits.has('eidolon') && !c.actor.traits.has('minion')).map(c => c.actor)
+    const pwol = game.pf2e.settings.variants.pwol.enabled;
     let calulatedXP = game.pf2e.gm.calculateXP(
         pcs[0].system.details.level.value,
         pcs.length,
-        combat.combatants.filter(c => c.actor.type === 'npc').map(c => c.actor.system.details.level.value),
+        combat.combatants.filter(c => c.actor.alliance === 'opposition').map(c => c.actor.system.details.level.value),
         combat.combatants.filter(c => c.actor.type === "hazard").map(c => c.actor.system.details.level.value),
-        {}
+        {pwol}
     )
     const award = new game.pf2e_awardxp.Award(null,{destinations:pcs, description:'Encounter (' + calulatedXP.rating.charAt(0).toUpperCase() +  calulatedXP.rating.slice(1) + ')', xp:calulatedXP.xpPerPlayer});
     award.render(true);
