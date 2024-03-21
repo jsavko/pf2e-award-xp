@@ -1,3 +1,7 @@
+1.0.3
+XP calculations will now only calcluate opposition npcs instead of all NPCs for combat auto calculated exp
+Added check for Proficeny without Level Variaent xp calculations
+
 1.0.2
 Filter Eidolons and Minions from the XP award Menu
 
