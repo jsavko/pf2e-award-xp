@@ -204,7 +204,7 @@ class Award extends FormApplication {
         const content = await renderTemplate("modules/pf2e-award-xp/templates/chat/party.hbs", context);
     
         const messageData = {
-          type: CONST.CHAT_MESSAGE_TYPES["OTHER"],
+          type: CONST.CHAT_MESSAGE_STYLES["OTHER"],
           content: content,
           speaker: ChatMessage.getSpeaker({actor: this.parent}),
           rolls: null,
@@ -296,7 +296,7 @@ class Award extends FormApplication {
 
       try {
         const { xp, description } = this.parseAwardCommand(message);
-        const award = new game.pf2e_awardxp.Award(null,{xp:xp, description:description});
+        const award = new game.pf2e_awardxp.Award(null,{xp:parseInt(xp), description:description});
         award.render(true);
 
       } catch(err) {

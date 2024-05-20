@@ -1,10 +1,10 @@
 {
   "id": "pf2e-award-xp",
   "title": "pf2e award xp",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "compatibility": {
-    "minimum": "11",
-    "verified": "11"
+    "minimum": "12",
+    "verified": "12"
   },
   "relationships": {
     "systems": [
