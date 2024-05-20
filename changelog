@@ -1,3 +1,8 @@
+1.0.4
+v12 Update: Changed all instances of CONST.CHAT_MESSAGE_TYPES to CONST.CHAT_MESSAGE_STYLES
+Fixed enricher erroring due to data type
+
+
 1.0.3
 XP calculations will now only calcluate opposition npcs instead of all NPCs for combat auto calculated exp
 Added check for Proficeny without Level Variaent xp calculations
