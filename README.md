@@ -12,7 +12,9 @@ Adds journal enrichers to allow reward dialog inside journals!
 ![enricher(3)](https://github.com/jsavko/pf2e-award-xp/assets/192591/f5405fb3-c9af-401a-8753-5e8cdeeb1871)
 
 Enrichers will automatically change text in this format to a clickable link
+
 ```[[/award 10 Accomplishment (Minor)]]{Minor Accomplishment}```
 
 You may also use the /award command like so
+
 ```/award 10 Accomplishment (Minor)```
