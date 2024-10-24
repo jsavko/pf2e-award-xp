@@ -1,0 +1,41 @@
+{
+    "PF2EAXP.Award": {
+      "Title": "Distribuer les récompenses",
+      "Header":"Sélectionnez la difficultée de la rencontre ou entrez une valeur personnalisée.",
+      "Action": "Récompense",
+      "Reason": "Raison",
+      "Message": "{name} a été récompensé {award} XP pour {description}.",
+      "NoDestinations": "Le groupe n'a pas de membre",
+      "NotGMError": "La commande /award n'est disponible que pour les MJs.",
+      "UnrecognizedWarning": "Impossible d'analyser {commands}. La commande /award devrait avoir pour synthaxe '/award 10 Ganer de l'expérience'.",
+      "Encounters": {
+        "Encounter":"Rencontre",
+        "Trivial": "Rencontre (Mineur)",
+        "Low":"Rencontre (Faible)",
+        "Moderate":"Rencontre (Modéré)",
+        "Severe":"Rencontre (Sérieuse)",
+        "Extreme":"Rencontre (Extrême)"        
+      },
+      "Accomplishments": {
+        "Accomplishment":"Accomplissement",
+        "Minor":"Accomplissement (Mineur)",
+        "Moderate":"Accomplissement (Modéré)",
+        "Major":"Accomplissement (Majeur)"
+      },
+      "Exp":"exp",
+      "Description":"Description",
+      "DescriptionPlaceholder": "Description personnalisée",
+      "Destination": "Cibles"
+    },
+    "PF2EAXP.Welcome":{
+      "Title":"Récompenses enrichies et commande",
+      "WelcomeMessage1":"Il semble que vous utilisiez PF2E Award Exp pour la première fois.",
+      "WelcomeMessage2": "Vous pouvez maintenant utiliser la commande textuelle dnas els journaux et message chat",
+      "WelcomeMessageOutput":"ce qui créera un élément cliquable comme ",
+      "WelcomeEnricher": "[[/award 10 Accomplissement (Mineur)]]{Accomplissement mineur}",
+      "WelcomeEnricherJank": "[[/aw<span></span>ard 10 Accomplissement (Mineur)]]{Accomplissement mineur}",
+      "WelcomeMessage3": "Pour ouvrir le menu des récompenses vous pouvez aussi utiliser la commande chat avec les arguments optionnels",
+      "WelcomeCommand":"/award 10 Accomplissement (Mineur)"
+    }
+}
+    
