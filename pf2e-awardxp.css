@@ -38,61 +38,61 @@
 }
 
 
-.pf2eawardxp .form-group {
+.shadowdarkawardxp .form-group {
     display: flex;
     align-items: center;
     justify-content: flex-end;
     margin-bottom: 15px; /* Adjust the margin as needed for spacing between form groups */
 }
 
-.pf2eawardxp .form-group label {
+.shadowdarkawardxp .form-group label {
     margin-right: 10px; /* Adjust the margin between label and input as needed */
     text-align: right;
     flex:0;
     width:200px;
 }
 
-.pf2eawardxp .form-group select {
+.shadowdarkawardxp .form-group select {
     width: 250px;
     flex:1;
     max-width: 300px;
 
 }
 
-.pf2eawardxp .form-group input {
+.shadowdarkawardxp .form-group input {
     width: 250px;
     flex:1;
     max-width: 300px;
 }
 
-.pf2eawardxp .xp-block {
+.shadowdarkawardxp .xp-block {
     display: flex;
     align-items: center;
     margin-top: 10px;
 }
 
-.pf2eawardxp .xp-text {
+.shadowdarkawardxp .xp-text {
     font-weight: bold;
 }
 
-.pf2eawardxp .xp-image {
+.shadowdarkawardxp .xp-image {
     margin: 10px 10px 10px 10px;
     width:45px;
     height: 45px;
     border: none;
 }
 
-.pf2eawardxp .recipients-block {
+.shadowdarkawardxp .recipients-block {
     margin-top: 20px; /* Adjust the margin as needed */
 }
 
-.pf2eawardxp .recipient-list {
+.shadowdarkawardxp .recipient-list {
     list-style: none;
     padding: 0;
     margin: 0;
 }
 
-.pf2eawardxp .recipient-list li {
+.shadowdarkawardxp .recipient-list li {
     display: inline;
     margin-right: 10px; /* Adjust the margin as needed */
 }

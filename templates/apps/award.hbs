@@ -1,37 +1,37 @@
 <div>
-    <b>{{localize "PF2EAXP.Award.Header"}}</b>
+    <b>{{localize "ShadowdarkAXP.Award.Header"}}</b>
     <form>
          <div class="form-group">
-            <label>{{localize "PF2EAXP.Award.Reason"}}:</label>
+            <label>{{localize "ShadowdarkAXP.Award.Reason"}}:</label>
             <select name="award-type">
-                <option value="Custom" data-xp="{{xp}}">{{localize "PF2EAXP.Award.DescriptionPlaceholder"}}</option>
+                <option value="Custom" data-xp="{{xp}}">{{localize "ShadowdarkAXP.Award.DescriptionPlaceholder"}}</option>
                 {{#if description}}
                 <option selected value="{{description}}" data-xp="{{xp}}">{{description}}</option>
                 {{/if}}
-                <option value="{{localize "PF2EAXP.Award.Encounters.Trivial"}}" data-xp="40">{{localize "PF2EAXP.Award.Encounters.Trivial"}} 40 {{localize "PF2EAXP.Award.Exp"}}</option>
-                <option value="{{localize "PF2EAXP.Award.Encounters.Low"}}" data-xp="60">{{localize "PF2EAXP.Award.Encounters.Low"}} 60 {{localize "PF2EAXP.Award.Exp"}}</option>
-                <option value="{{localize "PF2EAXP.Award.Encounters.Moderate"}}" data-xp="80">{{localize "PF2EAXP.Award.Encounters.Moderate"}} 80 {{localize "PF2EAXP.Award.Exp"}}</option>
-                <option value="{{localize "PF2EAXP.Award.Encounters.Severe"}}" data-xp="120">{{localize "PF2EAXP.Award.Encounters.Severe"}} 120 {{localize "PF2EAXP.Award.Exp"}}</option>
-                <option value="{{localize "PF2EAXP.Award.Encounters.Extreme"}}" data-xp="160" >{{localize "PF2EAXP.Award.Encounters.Extreme"}} 160 {{localize "PF2EAXP.Award.Exp"}}</option>
-                <option value="{{localize "PF2EAXP.Award.Accomplishments.Minor"}}" data-xp="10">{{localize "PF2EAXP.Award.Accomplishments.Minor"}} 10 {{localize "PF2EAXP.Award.Exp"}}</option>
-                <option value="{{localize "PF2EAXP.Award.Accomplishments.Moderate"}}" data-xp="30">{{localize "PF2EAXP.Award.Accomplishments.Moderate"}} 30 {{localize "PF2EAXP.Award.Exp"}}</option>
-                <option value="{{localize "PF2EAXP.Award.Accomplishments.Major"}}" data-xp="80">{{localize "PF2EAXP.Award.Accomplishments.Major"}} 80 {{localize "PF2EAXP.Award.Exp"}}</option>
+                <option value="{{localize "ShadowdarkAXP.Award.Encounters.Trivial"}}" data-xp="40">{{localize "ShadowdarkAXP.Award.Encounters.Trivial"}} 40 {{localize "ShadowdarkAXP.Award.Exp"}}</option>
+                <option value="{{localize "ShadowdarkAXP.Award.Encounters.Low"}}" data-xp="60">{{localize "ShadowdarkAXP.Award.Encounters.Low"}} 60 {{localize "ShadowdarkAXP.Award.Exp"}}</option>
+                <option value="{{localize "ShadowdarkAXP.Award.Encounters.Moderate"}}" data-xp="80">{{localize "ShadowdarkAXP.Award.Encounters.Moderate"}} 80 {{localize "ShadowdarkAXP.Award.Exp"}}</option>
+                <option value="{{localize "ShadowdarkAXP.Award.Encounters.Severe"}}" data-xp="120">{{localize "ShadowdarkAXP.Award.Encounters.Severe"}} 120 {{localize "ShadowdarkAXP.Award.Exp"}}</option>
+                <option value="{{localize "ShadowdarkAXP.Award.Encounters.Extreme"}}" data-xp="160" >{{localize "ShadowdarkAXP.Award.Encounters.Extreme"}} 160 {{localize "ShadowdarkAXP.Award.Exp"}}</option>
+                <option value="{{localize "ShadowdarkAXP.Award.Accomplishments.Minor"}}" data-xp="10">{{localize "ShadowdarkAXP.Award.Accomplishments.Minor"}} 10 {{localize "ShadowdarkAXP.Award.Exp"}}</option>
+                <option value="{{localize "ShadowdarkAXP.Award.Accomplishments.Moderate"}}" data-xp="30">{{localize "ShadowdarkAXP.Award.Accomplishments.Moderate"}} 30 {{localize "ShadowdarkAXP.Award.Exp"}}</option>
+                <option value="{{localize "ShadowdarkAXP.Award.Accomplishments.Major"}}" data-xp="80">{{localize "ShadowdarkAXP.Award.Accomplishments.Major"}} 80 {{localize "ShadowdarkAXP.Award.Exp"}}</option>
             </select>
         </div>
         <div class="form-group">
-            <label>{{localize "PF2EAXP.Award.Action"}}:</label>
+            <label>{{localize "ShadowdarkAXP.Award.Action"}}:</label>
             {{numberInput xp name="xp" class="uninput" min=0 step=1}}
         </div>
         {{#if description}}
-        <div class="pf2e_awardxp_description form-group" style="visibility: hidden;">
+        <div class="shadowdark_awardxp_description form-group" style="visibility: hidden;">
         {{else}}
-        <div class="pf2e_awardxp_description form-group">
+        <div class="shadowdark_awardxp_description form-group">
         {{/if}}
-            <label>{{localize "PF2EAXP.Award.Description"}}:</label>
-            <input name="description" type="text" inputmode="text" placeholder="{{localize "PF2EAXP.Award.DescriptionPlaceholder"}}" value="{{description}}">
+            <label>{{localize "ShadowdarkAXP.Award.Description"}}:</label>
+            <input name="description" type="text" inputmode="text" placeholder="{{localize "ShadowdarkAXP.Award.DescriptionPlaceholder"}}" value="{{description}}">
         </div>
         <div>
-        <p><b>{{localize "PF2EAXP.Award.Destination"}}</b>:</p>  
+        <p><b>{{localize "ShadowdarkAXP.Award.Destination"}}</b>:</p>  
         </div>
 
    <div class="destinations">
@@ -45,13 +45,13 @@
         </div>
 
         {{else}}
-        <p class="no-destinations">{{localize "PF2EAXP.Award.NoDestinations"}}</p>
+        <p class="no-destinations">{{localize "ShadowdarkAXP.Award.NoDestinations"}}</p>
         {{/each}}
     </div>
 
 
     <button type="submit" name="transfer" disabled>
-        <i class="fa-solid fa-trophy"></i> {{localize "PF2EAXP.Award.Action"}}
+        <i class="fa-solid fa-trophy"></i> {{localize "ShadowdarkAXP.Award.Action"}}
     </button>
     </form>
 

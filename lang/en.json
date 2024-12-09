@@ -1,5 +1,5 @@
 {
-    "PF2EAXP.Award": {
+    "ShadowdarkAXP.Award": {
       "Title": "Distribute Award",
       "Header":"Select the Encounter difficulty or enter a custom value.",
       "Action": "Award",
@@ -27,9 +27,9 @@
       "DescriptionPlaceholder": "Custom Description",
       "Destination": "Recipients"
     },
-    "PF2EAXP.Welcome":{
+    "ShadowdarkAXP.Welcome":{
       "Title":"Award Enrichers and Command",
-      "WelcomeMessage1":"It seems you're using PF2E Award Exp for the first time.",
+      "WelcomeMessage1":"It seems you're using Shadowdark Award Exp for the first time.",
       "WelcomeMessage2": "You can now use the text enricher in Journals and chat message",
       "WelcomeMessageOutput":"will create a clickable elemental like so ",
       "WelcomeEnricher": "[[/award 10 Accomplishment (Minor)]]{Minor Accomplishment}",

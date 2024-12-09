@@ -10,22 +10,22 @@
 Hooks.on('preDeleteCombat', (combat,html,id) => {
     if (!game.user.isGM) return
     const pcs = combat.combatants.filter(c => c.actor.type==='character' && c.actor.alliance === 'party' && !c.actor.traits.has('eidolon') && !c.actor.traits.has('minion')).map(c => c.actor)
-    const pwol = game.pf2e.settings.variants.pwol.enabled;
-    let calulatedXP = game.pf2e.gm.calculateXP(
+    const pwol = game.shadowdark.settings.variants.pwol.enabled;
+    let calulatedXP = game.shadowdark.gm.calculateXP(
         pcs[0].system.details.level.value,
         pcs.length,
         combat.combatants.filter(c => c.actor.alliance === 'opposition').map(c => c.actor.system.details.level.value),
         combat.combatants.filter(c => c.actor.type === "hazard").map(c => c.actor.system.details.level.value),
         {pwol}
     )
-    const award = new game.pf2e_awardxp.Award(null,{destinations:pcs, description:'Encounter (' + calulatedXP.rating.charAt(0).toUpperCase() +  calulatedXP.rating.slice(1) + ')', xp:calulatedXP.xpPerPlayer});
+    const award = new game.shadowdark_awardxp.Award(null,{destinations:pcs, description:'Encounter (' + calulatedXP.rating.charAt(0).toUpperCase() +  calulatedXP.rating.slice(1) + ')', xp:calulatedXP.xpPerPlayer});
     award.render(true);
 })
 
 
 Hooks.once("init", async () => {
-    console.log('PF2E Award XP Init')
-    game.pf2e_awardxp = {openDialog: Award.openDialog,
+    console.log('Shadowdark Award XP Init')
+    game.shadowdark_awardxp = {openDialog: Award.openDialog,
                         openPlayerDialog: Award.openDialog,
                         Award: Award
                         }
@@ -36,11 +36,11 @@ Hooks.once("init", async () => {
 
 
 Hooks.once("ready", async () => {
-    game.pf2e_awardxp.Award._welcomeMessage();
+    game.shadowdark_awardxp.Award._welcomeMessage();
 });
 
 
-Hooks.on("chatMessage", (app, message, data) => game.pf2e_awardxp.Award.chatMessage(message));
+Hooks.on("chatMessage", (app, message, data) => game.shadowdark_awardxp.Award.chatMessage(message));
 
 export function registerCustomEnrichers() {
 CONFIG.TextEditor.enrichers.push({
@@ -52,7 +52,7 @@ document.body.addEventListener("click", awardAction);
 }
 
 export function registerWorldSettings() { 
-    game.settings.register("pf2e-award-xp", "welcomeMessageShown", {
+    game.settings.register("shadowdark-award-xp", "welcomeMessageShown", {
         scope: "world",
         name: "welcomeMessageShown",
         hint: "welcomeMessageShown",
@@ -97,11 +97,11 @@ async function enrichAward(match, options) {
    const command = config._config;
 
    const block = document.createElement("span");
-   block.classList.add("award-block", "pf2eaxp");
+   block.classList.add("award-block", "shadowdarkaxp");
    block.dataset.awardCommand = command;
  
    block.innerHTML += `<a class="award-link" data-action="awardRequest">
-     <i class="fa-solid fa-trophy"></i> ${label ?? game.i18n.localize("PF2EAXP.Award.Action")}
+     <i class="fa-solid fa-trophy"></i> ${label ?? game.i18n.localize("ShadowdarkAXP.Award.Action")}
    </a>
  `;
 
@@ -133,9 +133,9 @@ class Award extends FormApplication {
 
     static get defaultOptions() {
         return foundry.utils.mergeObject(super.defaultOptions, {
-          classes: ["pf2e", "award", "dialog","pf2eawardxp"],
-          template: "modules/pf2e-award-xp/templates/apps/award.hbs",
-          title: "PF2EAXP.Award.Title",
+          classes: ["shadowdark", "award", "dialog","shadowdarkawardxp"],
+          template: "modules/shadowdark-award-xp/templates/apps/award.hbs",
+          title: "ShadowdarkAXP.Award.Title",
           width: 400,
           height: "auto",
           currency: null,
@@ -181,7 +181,7 @@ class Award extends FormApplication {
         if ( !amount || !destinations.length ) return;
         for ( const destination of destinations ) {
           try {
-            console.log(`PFPF2E Award XP - ${destination.name} - ${destination.system.details.xp.value}(starting) +  ${amount} (award) = ${destination.system.details.xp.value + amount} (total)`)
+            console.log(`PFShadowdark Award XP - ${destination.name} - ${destination.system.details.xp.value}(starting) +  ${amount} (award) = ${destination.system.details.xp.value + amount} (total)`)
             await destination.update({'system.details.xp.value': destination.system.details.xp.value + amount})
           } catch(err) {
             ui.notifications.warn(destination.name + ": " + err.message);
@@ -197,11 +197,11 @@ class Award extends FormApplication {
     */
     static async displayAwardMessages(amount, description, destinations) {
         const context = {
-            message: game.i18n.format("PF2EAXP.Award.Message",
+            message: game.i18n.format("ShadowdarkAXP.Award.Message",
             {name: game.actors.party.name, award: amount, description: description }),
             destinations:destinations
         }
-        const content = await renderTemplate("modules/pf2e-award-xp/templates/chat/party.hbs", context);
+        const content = await renderTemplate("modules/shadowdark-award-xp/templates/chat/party.hbs", context);
     
         const messageData = {
           type: CONST.CHAT_MESSAGE_STYLES["OTHER"],
@@ -225,9 +225,9 @@ class Award extends FormApplication {
     html.find('[name=award-type]').on( "change", function() {
         html.find('[name=xp]')[0].value = this.selectedOptions[0].getAttribute("data-xp");
         if (this.selectedOptions[0].value == "Custom"){
-            $(".pf2e_awardxp_description").css("visibility", "visible");
+            $(".shadowdark_awardxp_description").css("visibility", "visible");
         } else { 
-            $(".pf2e_awardxp_description").css("visibility", "hidden");
+            $(".shadowdark_awardxp_description").css("visibility", "hidden");
         }
       } );
 
@@ -290,13 +290,13 @@ class Award extends FormApplication {
    */
   static async handleAward(message) {
     if ( !game.user.isGM ) {
-        ui.notifications.error("PF2EAXP.Award.NotGMError", { localize: true });
+        ui.notifications.error("ShadowdarkAXP.Award.NotGMError", { localize: true });
         return;
       }
 
       try {
         const { xp, description } = this.parseAwardCommand(message);
-        const award = new game.pf2e_awardxp.Award(null,{xp:parseInt(xp), description:description});
+        const award = new game.shadowdark_awardxp.Award(null,{xp:parseInt(xp), description:description});
         award.render(true);
 
       } catch(err) {
@@ -320,36 +320,36 @@ class Award extends FormApplication {
    */ 
   static openDialog(options={}) { 
     if ( !game.user.isGM ) {
-        ui.notifications.error("PF2EAXP.Award.NotGMError", { localize: true });
+        ui.notifications.error("ShadowdarkAXP.Award.NotGMError", { localize: true });
         return;
       }
       
     let xp = options.award ?? null;
     let description = options.description ?? null;
-    const award = new game.pf2e_awardxp.Award(null,{xp:xp, description:description});
+    const award = new game.shadowdark_awardxp.Award(null,{xp:xp, description:description});
     award.render(true);
 
   }
 
 
   static _welcomeMessage() {
-        if (!game.settings.get("pf2e-award-xp", "welcomeMessageShown")) {
+        if (!game.settings.get("shadowdark-award-xp", "welcomeMessageShown")) {
             if (game.user.isGM) {
                 const content = [`
-                <div class="pf2eawardxp">
-                    <h3 class="nue">${game.i18n.localize("PF2EAXP.Welcome.Title")}</h3>
-                    <p class="nue">${game.i18n.localize("PF2EAXP.Welcome.WelcomeMessage1")}</p>
-                    <p class="nue">${game.i18n.localize("PF2EAXP.Welcome.WelcomeMessage2")}</p>
+                <div class="shadowdarkawardxp">
+                    <h3 class="nue">${game.i18n.localize("ShadowdarkAXP.Welcome.Title")}</h3>
+                    <p class="nue">${game.i18n.localize("ShadowdarkAXP.Welcome.WelcomeMessage1")}</p>
+                    <p class="nue">${game.i18n.localize("ShadowdarkAXP.Welcome.WelcomeMessage2")}</p>
                     <p>
-                        ${game.i18n.localize("PF2EAXP.Welcome.WelcomeEnricherJank")}
+                        ${game.i18n.localize("ShadowdarkAXP.Welcome.WelcomeEnricherJank")}
                     </p>
-                    <p class="nue">${game.i18n.localize("PF2EAXP.Welcome.WelcomeMessageOutput")}</p>
+                    <p class="nue">${game.i18n.localize("ShadowdarkAXP.Welcome.WelcomeMessageOutput")}</p>
                     <p>
-                        ${game.i18n.localize("PF2EAXP.Welcome.WelcomeEnricher")}
+                        ${game.i18n.localize("ShadowdarkAXP.Welcome.WelcomeEnricher")}
                     </p>
-                    <p class="nue">${game.i18n.localize("PF2EAXP.Welcome.WelcomeMessage3")}</p>
+                    <p class="nue">${game.i18n.localize("ShadowdarkAXP.Welcome.WelcomeMessage3")}</p>
                     <p>
-                        ${game.i18n.localize("PF2EAXP.Welcome.WelcomeCommand")}
+                        ${game.i18n.localize("ShadowdarkAXP.Welcome.WelcomeCommand")}
                     </p>
                     <p class="nue"></p>
                     <footer class="nue"></footer>
@@ -358,14 +358,14 @@ class Award extends FormApplication {
                 const chatData = content.map(c => {
                     return {
                         whisper: [game.user.id],
-                        speaker: { alias: "PF2E Award Exp" },
+                        speaker: { alias: "Shadowdark Award Exp" },
                         flags: { core: { canPopout: true } },
                         content: c
                     };
                 });
                 ChatMessage.implementation.createDocuments(chatData);
                 //Set flag to not send message again
-                game.settings.set("pf2e-award-xp", "welcomeMessageShown", true)
+                game.settings.set("shadowdark-award-xp", "welcomeMessageShown", true)
             }
         }
 

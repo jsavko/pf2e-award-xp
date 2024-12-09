@@ -1,7 +1,7 @@
 {
-  "id": "pf2e-award-xp",
-  "title": "pf2e award xp",
-  "version": "1.0.4",
+  "id": "shadowdark-award-xp",
+  "title": "Shadowdark Award XP",
+  "version": "0.1.0",
   "compatibility": {
     "minimum": "12",
     "verified": "12"
@@ -9,22 +9,22 @@
   "relationships": {
     "systems": [
       {
-        "id": "pf2e",
+        "id": "shadowdark",
         "type": "system",
         "compatibility": {}
       }
     ]
   },
   "esmodules": [
-    "pf2e-awardxp.js"
+    "shadowdark-awardxp.js"
   ],
   "styles": [
-    "pf2e-awardxp.css"
+    "shadowdark-awardxp.css"
   ],
   "authors": [
     {
-      "name": "LostPhoenix",
-      "discord": "lostphoenix._.",
+      "name": "Zach Waller",
+      "discord": "haloxbox",
       "flags": {}
     }
   ],
@@ -36,6 +36,6 @@
       "flags": {}
     }
   ],
-  "manifest": "https://github.com/jsavko/pf2e-award-xp/releases/latest/download/module.json",
-  "download": "https://github.com/jsavko/pf2e-award-xp/releases/download/1.0.4/module.zip"
+  "manifest": "https://github.com/jsavko/shadowdark-award-xp/releases/latest/download/module.json",
+  "download": "https://github.com/jsavko/shadowdark-award-xp/releases/download/1.0.4/module.zip"
 }
