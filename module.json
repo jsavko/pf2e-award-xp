@@ -16,10 +16,10 @@
     ]
   },
   "esmodules": [
-    "pf2e-awardxp.js"
+    "awardxp.js"
   ],
   "styles": [
-    "pf2e-awardxp.css"
+    "awardxp.css"
   ],
   "authors": [
     {
