@@ -2,6 +2,10 @@
  
 Use a command to award Treasure XP to every player in the party!
 
+### Installation
+
+Use the Install Module dialog and paste the Manifest URL `https://github.com/zacharydwaller/shadowdark-award-xp/releases/download/latest/module.json`
+
 ### Setup
 
 Create an Actor folder called "The Party" and drop your player characters into it. NPCs can also be placed in this folder, only Players will be awarded XP. Conversely, any characters not in The Party will not be awarded XP.
