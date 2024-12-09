@@ -1,28 +1,20 @@
 {
     "ShadowdarkAXP.Award": {
       "Title": "Distribute Award",
-      "Header":"Select the Encounter difficulty or enter a custom value.",
+      "Header":"Select the treasure quality or enter a custom value.",
       "Action": "Award",
       "Reason": "Reason",
-      "Message": "{name} has been awarded {award} XP for {description}.",
+      "Message": "The Party has been awarded {award} XP for {description}.",
       "NoDestinations": "The Party has no members",
       "NotGMError": "The /award command is only available to GMs.",
-      "UnrecognizedWarning": "Unable to parse {commands}. The /award command should in the syntax '/award 10 Earned some EXP'.",
-      "Encounters": {
-        "Encounter":"Encounter",
-        "Trivial": "Encounter (Trivial)",
-        "Low":"Encounter (Low)",
-        "Moderate":"Encounter (Moderate)",
-        "Severe":"Encounter (Severe)",
-        "Extreme":"Encounter (Extreme)"        
+      "UnrecognizedWarning": "Unable to parse {commands}. The /award command should in the syntax '/award 1 Reason'.",
+      "Treasures": {
+        "Treasure":"Treasure",
+        "Normal":"Treasure (Normal)",
+        "Fabulous":"Treasure (Fabulous)",
+        "Legendary":"Treasure (Legendary)"
       },
-      "Accomplishments": {
-        "Accomplishment":"Accomplishment",
-        "Minor":"Accomplishment (Minor)",
-        "Moderate":"Accomplishment (Moderate)",
-        "Major":"Accomplishment (Major)"
-      },
-      "Exp":"exp",
+      "Exp":"XP",
       "Description":"Description",
       "DescriptionPlaceholder": "Custom Description",
       "Destination": "Recipients"
@@ -32,10 +24,10 @@
       "WelcomeMessage1":"It seems you're using Shadowdark Award Exp for the first time.",
       "WelcomeMessage2": "You can now use the text enricher in Journals and chat message",
       "WelcomeMessageOutput":"will create a clickable elemental like so ",
-      "WelcomeEnricher": "[[/award 10 Accomplishment (Minor)]]{Minor Accomplishment}",
-      "WelcomeEnricherJank": "[[/aw<span></span>ard 10 Accomplishment (Minor)]]{Minor Accomplishment}",
+      "WelcomeEnricher": "[[/award 3 Treasure (Fabulous)]]{Fabulous Treasure}",
+      "WelcomeEnricherJank": "[[/aw<span></span>ard 3 Treasure (Fabulous)]]{Fabulous Treasure}",
       "WelcomeMessage3": "To open the Award menu you may also use the chat command with optional arguments",
-      "WelcomeCommand":"/award 10 Accomplishment (Minor)"
+      "WelcomeCommand":"/award 3 Treasure (Fabulous)"
     }
 }
     

@@ -4,18 +4,13 @@
          <div class="form-group">
             <label>{{localize "ShadowdarkAXP.Award.Reason"}}:</label>
             <select name="award-type">
-                <option value="Custom" data-xp="{{xp}}">{{localize "ShadowdarkAXP.Award.DescriptionPlaceholder"}}</option>
                 {{#if description}}
                 <option selected value="{{description}}" data-xp="{{xp}}">{{description}}</option>
                 {{/if}}
-                <option value="{{localize "ShadowdarkAXP.Award.Encounters.Trivial"}}" data-xp="40">{{localize "ShadowdarkAXP.Award.Encounters.Trivial"}} 40 {{localize "ShadowdarkAXP.Award.Exp"}}</option>
-                <option value="{{localize "ShadowdarkAXP.Award.Encounters.Low"}}" data-xp="60">{{localize "ShadowdarkAXP.Award.Encounters.Low"}} 60 {{localize "ShadowdarkAXP.Award.Exp"}}</option>
-                <option value="{{localize "ShadowdarkAXP.Award.Encounters.Moderate"}}" data-xp="80">{{localize "ShadowdarkAXP.Award.Encounters.Moderate"}} 80 {{localize "ShadowdarkAXP.Award.Exp"}}</option>
-                <option value="{{localize "ShadowdarkAXP.Award.Encounters.Severe"}}" data-xp="120">{{localize "ShadowdarkAXP.Award.Encounters.Severe"}} 120 {{localize "ShadowdarkAXP.Award.Exp"}}</option>
-                <option value="{{localize "ShadowdarkAXP.Award.Encounters.Extreme"}}" data-xp="160" >{{localize "ShadowdarkAXP.Award.Encounters.Extreme"}} 160 {{localize "ShadowdarkAXP.Award.Exp"}}</option>
-                <option value="{{localize "ShadowdarkAXP.Award.Accomplishments.Minor"}}" data-xp="10">{{localize "ShadowdarkAXP.Award.Accomplishments.Minor"}} 10 {{localize "ShadowdarkAXP.Award.Exp"}}</option>
-                <option value="{{localize "ShadowdarkAXP.Award.Accomplishments.Moderate"}}" data-xp="30">{{localize "ShadowdarkAXP.Award.Accomplishments.Moderate"}} 30 {{localize "ShadowdarkAXP.Award.Exp"}}</option>
-                <option value="{{localize "ShadowdarkAXP.Award.Accomplishments.Major"}}" data-xp="80">{{localize "ShadowdarkAXP.Award.Accomplishments.Major"}} 80 {{localize "ShadowdarkAXP.Award.Exp"}}</option>
+                <option value="Custom" data-xp="{{xp}}">{{localize "ShadowdarkAXP.Award.DescriptionPlaceholder"}}</option>
+                <option value="{{localize "ShadowdarkAXP.Award.Treasures.Normal"}}" data-xp="1">{{localize "ShadowdarkAXP.Award.Treasures.Normal"}} 1 {{localize "ShadowdarkAXP.Award.Exp"}}</option>
+                <option value="{{localize "ShadowdarkAXP.Award.Treasures.Fabulous"}}" data-xp="3">{{localize "ShadowdarkAXP.Award.Treasures.Fabulous"}} 3 {{localize "ShadowdarkAXP.Award.Exp"}}</option>
+                <option value="{{localize "ShadowdarkAXP.Award.Treasures.Legendary"}}" data-xp="10">{{localize "ShadowdarkAXP.Award.Treasures.Legendary"}} 10 {{localize "ShadowdarkAXP.Award.Exp"}}</option>
             </select>
         </div>
         <div class="form-group">

@@ -1,4 +1,11 @@
 /* -------------------------------------------- */
+/*  Constants                                   */
+/* -------------------------------------------- */
+
+const PARTY_FOLDER_NAME = "The Party";
+const DEFAULT_XP_AWARD = 1;
+
+/* -------------------------------------------- */
 /*  Hooks                                       */
 /* -------------------------------------------- */
 
@@ -18,7 +25,7 @@ Hooks.on('preDeleteCombat', (combat,html,id) => {
         combat.combatants.filter(c => c.actor.type === "hazard").map(c => c.actor.system.details.level.value),
         {pwol}
     )
-    const award = new game.shadowdark_awardxp.Award(null,{destinations:pcs, description:'Encounter (' + calulatedXP.rating.charAt(0).toUpperCase() +  calulatedXP.rating.slice(1) + ')', xp:calulatedXP.xpPerPlayer});
+    const award = new game.shadowdark_awardxp.Award(null,{destinations:pcs, description:'Treasure (' + calulatedXP.rating.charAt(0).toUpperCase() +  calulatedXP.rating.slice(1) + ')', xp:calulatedXP.xpPerPlayer});
     award.render(true);
 })
 
@@ -128,6 +135,20 @@ async function awardAction(event) {
     event.stopPropagation();
     Award.handleAward(command);
   }
+
+function getParty() {
+  const partyFolders = game.folders.search({query: PARTY_FOLDER_NAME, filters: [
+    {field: "type", operator: "equals", value: "Actor"}
+  ]});
+  if (partyFolders.length > 0) {
+    const partyFolderId = partyFolders[0].id;
+    return game.actors.search({filters: [
+      {field: "folder.id", operator: "equals", value: partyFolderId},
+      {field: "type", operator: "equals", value: "Player"}
+    ]});
+  }
+  return [];
+}
   
 class Award extends FormApplication {
 
@@ -136,7 +157,7 @@ class Award extends FormApplication {
           classes: ["shadowdark", "award", "dialog","shadowdarkawardxp"],
           template: "modules/shadowdark-award-xp/templates/apps/award.hbs",
           title: "ShadowdarkAXP.Award.Title",
-          width: 400,
+          width: 425,
           height: "auto",
           currency: null,
           xp: null,
@@ -150,7 +171,7 @@ class Award extends FormApplication {
         const context = super.getData(options);
         context.xp = this.options.xp ?? 0;
         context.description = this.options.description ?? null;       
-        context.destinations = this.options.destinations.length > 0 ? this.options.destinations : game.actors.party.members.filter(m => m.type === "character" &&  !m.traits.has('eidolon') && !m.traits.has('minion'));
+        context.destinations = this.options.destinations.length > 0 ? this.options.destinations : getParty();
         return context;
       }
 
@@ -181,8 +202,8 @@ class Award extends FormApplication {
         if ( !amount || !destinations.length ) return;
         for ( const destination of destinations ) {
           try {
-            console.log(`PFShadowdark Award XP - ${destination.name} - ${destination.system.details.xp.value}(starting) +  ${amount} (award) = ${destination.system.details.xp.value + amount} (total)`)
-            await destination.update({'system.details.xp.value': destination.system.details.xp.value + amount})
+            console.log(`Shadowdark Award XP - ${destination.name} - ${destination.system.level.xp}(starting) +  ${amount} (award) = ${destination.system.level.xp + amount} (total)`)
+            await destination.update({'system.level.xp': destination.system.level.xp + amount})
           } catch(err) {
             ui.notifications.warn(destination.name + ": " + err.message);
           }
@@ -198,8 +219,8 @@ class Award extends FormApplication {
     static async displayAwardMessages(amount, description, destinations) {
         const context = {
             message: game.i18n.format("ShadowdarkAXP.Award.Message",
-            {name: game.actors.party.name, award: amount, description: description }),
-            destinations:destinations
+            {award: amount, description: description }),
+            destinations: destinations
         }
         const content = await renderTemplate("modules/shadowdark-award-xp/templates/chat/party.hbs", context);
     
@@ -296,7 +317,7 @@ class Award extends FormApplication {
 
       try {
         const { xp, description } = this.parseAwardCommand(message);
-        const award = new game.shadowdark_awardxp.Award(null,{xp:parseInt(xp), description:description});
+        const award = new game.shadowdark_awardxp.Award(null,{xp:parseInt(xp ?? DEFAULT_XP_AWARD), description:description});
         award.render(true);
 
       } catch(err) {
