@@ -1,0 +1,41 @@
+{
+    "PF2EAXP.Award": {
+      "Title": "Rozdanie Nagród",
+      "Header":"Wybierz poziom trudności spotkania lub wprowadź wartość niestandardową.",
+      "Action": "Nagroda",
+      "Reason": "Przyczyna",
+      "Message": "{name} został nagrodzony {award} PD za {description}.",
+      "NoDestinations": "Drużyna nie ma członków",
+      "NotGMError": "Komenda /award jest dostępna tylko dla MG.",
+      "UnrecognizedWarning": "Nie można przeanalizować {commands}. Komenda /award powinna mieć składnię „/award 10 Earned some EXP”.",
+      "Encounters": {
+        "Encounter":"Spotkanie",
+        "Trivial": "Spotkanie (Trywialne)",
+        "Low":"Spotkanie (Niskie)",
+        "Moderate":"Encounter (Umiarkowane)",
+        "Severe":"Spotkanie (Ciężkie)",
+        "Extreme":"Spotkanie (Ekstremalne)"        
+      },
+      "Accomplishments": {
+        "Accomplishment":"Osiągnięcie",
+        "Minor":"Osiągnięcie (Niewielkie)",
+        "Moderate":"Osiągnięcie (Średnie)",
+        "Major":"Osiągnięcie (Znaczące)"
+      },
+      "Exp":"pd",
+      "Description":"Opis",
+      "DescriptionPlaceholder": "Opis niestandardowy",
+      "Destination": "Odbiorcy"
+    },
+    "PF2EAXP.Welcome":{
+      "Title":"Nagrody wzbogacające i dowodzenie",
+      "WelcomeMessage1":"Wygląda na to, że używasz PF2E Award Exp po raz pierwszy.",
+      "WelcomeMessage2": "Można teraz korzystać ze wzbogacania tekstu w dziennikach i wiadomościach czatu.",
+      "WelcomeMessageOutput":"utworzy klikalny elemental w następujący sposób ",
+      "WelcomeEnricher": "[[/award 10 Accomplishment (Minor)]]{Niewielkie osiągnięcie}",
+      "WelcomeEnricherJank": "[[/award 10 Accomplishment (Minor)]]{Niewielkie osiągnięcie}",
+      "WelcomeMessage3": "Aby otworzyć menu nagród, można również użyć polecenia czatu z opcjonalnymi argumentami",
+      "WelcomeCommand":"/award 10 Accomplishment (Minor)"
+    }
+}
+    
