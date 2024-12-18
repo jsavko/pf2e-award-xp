@@ -34,6 +34,12 @@
       "name": "English",
       "path": "lang/en.json",
       "flags": {}
+    },    
+    {
+      "lang": "pl",
+      "name": "Polish",
+      "path": "lang/pl.json",
+      "flags": {}
     }
   ],
   "manifest": "https://github.com/jsavko/pf2e-award-xp/releases/latest/download/module.json",
