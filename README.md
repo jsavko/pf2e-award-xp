@@ -22,10 +22,11 @@ Optionally, add a description of the award:
 
 ```/award 10 Dragon's treasure hoard```
 
-![chatoutput](https://github.com/jsavko/shadowdark-award-xp/assets/192591/b19d5efd-d5e3-473f-b671-0fac904144d8)
+![Command](https://github.com/user-attachments/assets/0050b631-16a5-418c-9306-da8bd424633b)
+
 
 Add journal enrichers to allow reward dialog inside journals! Enrichers will automatically change text in this format to a clickable link
 
 ```[[/award 10 Accomplishment (Minor)]]{Minor Accomplishment}```
 
-![enricher(3)](https://github.com/jsavko/shadowdark-award-xp/assets/192591/f5405fb3-c9af-401a-8753-5e8cdeeb1871)
+![Journal](https://github.com/user-attachments/assets/5756ba32-ed8d-4f12-bc46-4d5a20a4c458)
