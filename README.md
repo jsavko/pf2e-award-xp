@@ -2,18 +2,23 @@
  
 Use a command to award Treasure XP to every player in the party!
 
+### Installation
+
+Use the Install Module dialog and paste the Manifest URL: `https://github.com/zacharydwaller/shadowdark-award-xp/releases/download/latest/module.json`
+
+This module has been submitted to Foundry for approval, once approved it can be installed normally using the Install Module dialog.
+
 ### Setup
 
-Create an Actor folder called "The Party" and drop your player characters into it. NPCs can also be placed in this folder, only Players will be awarded XP. Conversely, any characters not in The Party will not be awarded XP.
+Create an Actor folder called "The Party" and drop your player characters into it. Only characters that are in this folder will be awarded XP. NPCs can also be placed in the folder without issue.
 
 ### Usage
 
-Use the `/award` command like so:
+Use the `/award` command to award each character in The Party:
 
 ```/award 1```
 
-To award XP to each character in The Party.
- Optionally, add a description of the award like so:
+Optionally, add a description of the award:
 
 ```/award 10 Dragon's treasure hoard```
 
