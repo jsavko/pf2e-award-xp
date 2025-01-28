@@ -133,19 +133,9 @@ async function awardAction(event) {
 }
 
 function getParty() {
-  const partyFolders = game.folders.search({
-    query: PARTY_FOLDER_NAME, filters: [
-      { field: "type", operator: "equals", value: "Actor" }
-    ]
-  });
+  const partyFolders = game.folders.filter(f => f.name === PARTY_FOLDER_NAME);
   if (partyFolders.length > 0) {
-    const partyFolderId = partyFolders[0].id;
-    return game.actors.search({
-      filters: [
-        { field: "folder.id", operator: "equals", value: partyFolderId },
-        { field: "type", operator: "equals", value: "Player" }
-      ]
-    });
+    return partyFolders[0].contents.filter(u => u.type === "Player");
   }
   return [];
 }
