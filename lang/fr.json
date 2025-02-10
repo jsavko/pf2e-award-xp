@@ -1,0 +1,40 @@
+{
+    "PF2EAXP.Award": {
+      "Title": "Distribuer la récompense",
+      "Header":"Choisir la difficulté de la rencontre ou entrer une valeur personnalisée.",
+      "Action": "Récompense",
+      "Reason": "Raison",
+      "Message": "{name} sa reçu {award} XP en raison d'un(e) {description}.",
+      "NoDestinations": "Le groupe ne comporte aucun membre",
+      "NotGMError": "La fonction /award n'est disponible qu'aux MJ.",
+      "UnrecognizedWarning": "Incapable de gérer {commands}. La syntaxe de la commande /award devrait prendre la forme '/award 10 EXP'.",
+      "Encounters": {
+        "Encounter":"Rencontre",
+        "Trivial": "Rencontre triviale",
+        "Low":"Rencontre faible",
+        "Moderate":"Rencontre modérée",
+        "Severe":"Rencontre sévère",
+        "Extreme":"Rencontre extrême"        
+      },
+      "Accomplishments": {
+        "Accomplishment":"Accomplissement",
+        "Minor":"Accomplissement (Mineur)",
+        "Moderate":"Accomplissement (Modéré)",
+        "Major":"Accomplissement (Majeur)"
+      },
+      "Exp":"exp",
+      "Description":"Description",
+      "DescriptionPlaceholder": "Description personnalisée",
+      "Destination": "Destinataires"
+    },
+    "PF2EAXP.Welcome":{
+      "Title":"Commandes et enrichisseurs de Award",
+      "WelcomeMessage1":"Il semble que vous utilisez 'PF2E Award Exp' pour la première fois.",
+      "WelcomeMessage2": "Vous pouvez désormais utiliser l'enrichisseur de texte dans les journaux et les messages de conversation",
+      "WelcomeMessageOutput":"créera un élément cliquable du genre ",
+      "WelcomeEnricher": "[[/award 10 Accomplissement mineur]]{Accomplissement mineur}",
+      "WelcomeEnricherJank": "[[/aw<span></span>ard 10 Accomplissement mineur]]{Accomplissement mineur}",
+      "WelcomeMessage3": "Pour ouvrir le menu Récompenser vous pouvez également utiliser la conversation avec des arguments optionnels",
+      "WelcomeCommand":"/award 10 Accomplissement mineur"
+    }
+}
