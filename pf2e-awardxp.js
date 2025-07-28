@@ -9,6 +9,7 @@
 
 Hooks.on('preDeleteCombat', (combat,html,id) => {
     if (!game.user.isGM) return
+    if (!game.settings.get("pf2e-award-xp", "combatPopup")) return
     const pcs = combat.combatants.filter(c => c.actor.type==='character' && c.actor.alliance === 'party' && !c.actor.traits.has('eidolon') && !c.actor.traits.has('minion')).map(c => c.actor)
     const pwol = game.pf2e.settings.variants.pwol.enabled;
     let calulatedXP = game.pf2e.gm.calculateXP(
@@ -60,6 +61,16 @@ export function registerWorldSettings() {
         type: Boolean,
         default: false
     });
+
+    game.settings.register("pf2e-award-xp", "combatPopup", {
+      scope: "world",
+      name: "combatPopup",
+      hint: "combatPopupHint",
+      config: true,
+      type: Boolean,
+      default: true
+  });
+
 }
 
 
@@ -223,11 +234,12 @@ class Award extends FormApplication {
     this._validateForm();
     
     html.find('[name=award-type]').on( "change", function() {
-        html.find('[name=xp]')[0].value = this.selectedOptions[0].getAttribute("data-xp");
+        html.find('[name=xp]')[0].value = this.selectedOptions[0].getAttribute("data-xp");  
+        const customBox = html.find (".pf2e_awardxp_description");
         if (this.selectedOptions[0].value == "Custom"){
-            $(".pf2e_awardxp_description").css("visibility", "visible");
+           customBox[0].style.visibility = 'visible';
         } else { 
-            $(".pf2e_awardxp_description").css("visibility", "hidden");
+           customBox[0].style.visibility = 'hidden';
         }
       } );
 

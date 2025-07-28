@@ -1,3 +1,9 @@
+1.0.6
+v13 Support
+
+1.0.5
+Added option to disable automatic popup of award xp dialog after combat ends. 
+
 1.0.4
 v12 Update: Changed all instances of CONST.CHAT_MESSAGE_TYPES to CONST.CHAT_MESSAGE_STYLES
 Fixed enricher erroring due to data type

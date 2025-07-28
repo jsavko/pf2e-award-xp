@@ -8,6 +8,8 @@
       "NoDestinations": "The Party has no members",
       "NotGMError": "The /award command is only available to GMs.",
       "UnrecognizedWarning": "Unable to parse {commands}. The /award command should in the syntax '/award 10 Earned some EXP'.",
+      "combatPopup": "Enable Popup",
+      "combatPopupHint":"Automatically opens Exp Award Window after Combat",
       "Encounters": {
         "Encounter":"Encounter",
         "Trivial": "Encounter (Trivial)",
