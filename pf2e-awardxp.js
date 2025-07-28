@@ -234,11 +234,12 @@ class Award extends FormApplication {
     this._validateForm();
     
     html.find('[name=award-type]').on( "change", function() {
-        html.find('[name=xp]')[0].value = this.selectedOptions[0].getAttribute("data-xp");
+        html.find('[name=xp]')[0].value = this.selectedOptions[0].getAttribute("data-xp");  
+        const customBox = html.find (".pf2e_awardxp_description");
         if (this.selectedOptions[0].value == "Custom"){
-            $(".pf2e_awardxp_description").css("visibility", "visible");
+           customBox[0].style.visibility = 'visible';
         } else { 
-            $(".pf2e_awardxp_description").css("visibility", "hidden");
+           customBox[0].style.visibility = 'hidden';
         }
       } );
 
