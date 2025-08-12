@@ -64,8 +64,8 @@ export function registerWorldSettings() {
 
     game.settings.register("pf2e-award-xp", "combatPopup", {
       scope: "world",
-      name: "combatPopup",
-      hint: "combatPopupHint",
+      name: "PF2EAXP.Award.combatPopup",
+      hint: "PF2EAXP.Award.combatPopupHint",
       config: true,
       type: Boolean,
       default: true
