@@ -1,42 +1,42 @@
 {
     "PF2EAXP.Award": {
-      "Title": "Distribute Award",
-      "Header":"Select the Encounter difficulty or enter a custom value.",
-      "Action": "Award",
-      "Reason": "Reason",
-      "Message": "{name} has been awarded {award} XP for {description}.",
-      "NoDestinations": "The Party has no members",
-      "NotGMError": "The /award command is only available to GMs.",
-      "UnrecognizedWarning": "Unable to parse {commands}. The /award command should in the syntax '/award 10 Earned some EXP'.",
-      "combatPopup": "Enable Popup",
-      "combatPopupHint":"Automatically opens Exp Award Window after Combat",
+      "Title": "Attribution de la récompense",
+      "Header": "Sélectionnez la difficulté de la rencontre ou entrez une valeur personnalisée.",
+      "Action": "Récompense",
+      "Reason": "Raison",
+      "Message": "{name} a reçu {award} XP pour {description}.",
+      "NoDestinations": "Le groupe n'a aucun membre.",
+      "NotGMError": "La commande /award n'est disponible que pour les MJs.",
+      "UnrecognizedWarning": "Impossible d'analyser {commands}. La commande /award doit respecter la syntaxe suivante '/award 10 Earned some EXP'.",
+      "combatPopup": "Activer la fenêtre contextuelle",
+      "combatPopupHint":"Ouvre automatiquement la fenêtre de récompense en XP après le combat",
       "Encounters": {
-        "Encounter":"Encounter",
-        "Trivial": "Encounter (Trivial)",
-        "Low":"Encounter (Low)",
-        "Moderate":"Encounter (Moderate)",
-        "Severe":"Encounter (Severe)",
-        "Extreme":"Encounter (Extreme)"        
+        "Encounter":"Rencontre",
+        "Trivial": "Rencontre (Triviale)",
+        "Low":"Rencontre (Faible)",
+        "Moderate":"Rencontre (Modérée)",
+        "Severe":"Rencontre (Sérieuse)",
+        "Extreme":"Rencontre (Extrême)"        
       },
       "Accomplishments": {
-        "Accomplishment":"Accomplishment",
-        "Minor":"Accomplishment (Minor)",
-        "Moderate":"Accomplishment (Moderate)",
-        "Major":"Accomplishment (Major)"
+        "Accomplishment":"Réussite",
+        "Minor":"Réussite (Mineure)",
+        "Moderate":"Réussite (Modérée)",
+        "Major":"Réussite (Majeure)"
       },
       "Exp":"exp",
       "Description":"Description",
-      "DescriptionPlaceholder": "Custom Description",
-      "Destination": "Recipients"
+      "DescriptionPlaceholder": "Description personnalisée",
+      "Destination": "Bénéficiaires"
     },
     "PF2EAXP.Welcome":{
-      "Title":"Award Enrichers and Command",
-      "WelcomeMessage1":"It seems you're using PF2E Award Exp for the first time.",
-      "WelcomeMessage2": "You can now use the text enricher in Journals and chat message",
-      "WelcomeMessageOutput":"will create a clickable elemental like so ",
-      "WelcomeEnricher": "[[/award 10 Accomplishment (Minor)]]{Minor Accomplishment}",
-      "WelcomeEnricherJank": "[[/aw<span></span>ard 10 Accomplishment (Minor)]]{Minor Accomplishment}",
-      "WelcomeMessage3": "To open the Award menu you may also use the chat command with optional arguments",
+      "Title":"Award Enrichisseurs et Commandes",
+      "WelcomeMessage1":"Il semble que vous utilisiez PF2E Award Exp pour la première fois.",
+      "WelcomeMessage2": "Vous pouvez désormais utiliser l'enrichisseur de texte dans les journaux et les messages du chat.",
+      "WelcomeMessageOutput":"créera un élément cliquable comme ceci",
+      "WelcomeEnricher": "[[/award 10 Accomplishment (Minor)]]{Réussite mineure}",
+      "WelcomeEnricherJank": "[[/aw<span></span>ard 10 Accomplishment (Minor)]]{Réussite mineure}",
+      "WelcomeMessage3": "Pour ouvrir le menu Récompenses, vous pouvez également utiliser la commande de chat avec des arguments facultatifs.",
       "WelcomeCommand":"/award 10 Accomplishment (Minor)"
     }
 }
