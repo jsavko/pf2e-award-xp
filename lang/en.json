@@ -1,8 +1,8 @@
 {
     "PF2EAXP.Award": {
-      "Title": "Distribute Award",
+      "Title": "Award XP",
       "Header":"Select the Encounter difficulty or enter a custom value.",
-      "Action": "Award",
+      "Action": "Distribute XP",
       "Reason": "Reason",
       "Message": "{name} has been awarded {award} XP for {description}.",
       "NoDestinations": "The Party has no members",

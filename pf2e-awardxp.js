@@ -19,7 +19,7 @@ Hooks.on('preDeleteCombat', (combat,html,id) => {
         combat.combatants.filter(c => c.actor.type === "hazard").map(c => c.actor.system.details.level.value),
         {pwol}
     )
-    const award = new game.pf2e_awardxp.Award(null,{destinations:pcs, description:'Encounter (' + calulatedXP.rating.charAt(0).toUpperCase() +  calulatedXP.rating.slice(1) + ')', xp:calulatedXP.xpPerPlayer});
+    const award = new game.pf2e_awardxp.Award({destinations:pcs, description:'Encounter (' + calulatedXP.rating.charAt(0).toUpperCase() +  calulatedXP.rating.slice(1) + ')', xp:calulatedXP.xpPerPlayer});
     award.render(true);
 })
 
@@ -140,125 +140,131 @@ async function awardAction(event) {
     Award.handleAward(command);
   }
   
-class Award extends FormApplication {
+const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api
 
-    static get defaultOptions() {
-        return foundry.utils.mergeObject(super.defaultOptions, {
-          classes: ["pf2e", "award", "dialog","pf2eawardxp"],
-          template: "modules/pf2e-award-xp/templates/apps/award.hbs",
-          title: "PF2EAXP.Award.Title",
-          width: 400,
-          height: "auto",
-          currency: null,
-          xp: null,
-          type: null,
-          description: null,
-          destinations: [],
-        });
+class Award extends HandlebarsApplicationMixin(ApplicationV2) {
+
+  static DEFAULT_OPTIONS = {
+    classes: ['pf2e', 'sheet', 'actor', 'award', 'pf2eawardxp'],
+    tag: 'form',  // REQUIRED for dialogs and forms
+    form: {
+      submitOnChange: false,
+      closeOnSubmit: false,
+      handler: Award.#onSubmitForm,
+    },
+    position: { width: 380, height: 'auto' },
+    window: {
+      resizable: true,
+      title: 'PF2EAXP.Award.Title' // Just the localization key
+    }
+  }
+  static PARTS = {
+    form: {
+      template: 'modules/pf2e-award-xp/templates/apps/award.hbs'
+    }
+  }
+
+   async _prepareContext(options) {
+    const context = await super._prepareContext(options);
+    context.xp = this.options.xp ?? 0;
+    context.description = this.options.description ?? null;       
+    context.destinations = this.options.destinations?.length > 0 ? this.options.destinations : game.actors.party.members.filter(m => m.type === "character" &&  !m.traits.has('eidolon') && !m.traits.has('minion'));
+    return context
+  }
+
+
+
+  static async #onSubmitForm(event, form, formData) {
+    event.preventDefault()
+    console.log('click')
+    const data = foundry.utils.expandObject(Object.fromEntries(formData));
+    console.log(data);
+    this.form.querySelector('button[name="transfer"]').disabled = true;
+    if(data['award-type'] != "Custom") {data.description = data['award-type'];}
+    let destinations = []
+    for (const actor in data.destination){ 
+        if (data.destination[actor] == "true") {
+          destinations.push(game.actors.get(actor))
+          
+        } 
+    }
+    console.log(destinations);
+    this.close();
+    if (game.user.isGM){
+      if (!Number(data.xp)) { 
+        ui.notifications.error("Invalid XP Entry");
+        return;
       }
-
-      getData(options={}) {
-        const context = super.getData(options);
-        context.xp = this.options.xp ?? 0;
-        context.description = this.options.description ?? null;       
-        context.destinations = this.options.destinations.length > 0 ? this.options.destinations : game.actors.party.members.filter(m => m.type === "character" &&  !m.traits.has('eidolon') && !m.traits.has('minion'));
-        return context;
-      }
-
-    /** @inheritdoc */
-    async _updateObject(event, formData) {
-        const data = foundry.utils.expandObject(formData);
-        this.form.querySelector('button[name="transfer"]').disabled = true;
-
-        if(data['award-type'] != "Custom") {data.description = data['award-type'];}
-        const destinations = []
-        for (const actor in data.destination){ 
-            if (data.destination[actor] == true) destinations.push(game.actors.get(actor))
-        }
-        this.close();
-        if (game.user.isGM){
-            await this.constructor.awardXP(data.xp, destinations)
-            await this.constructor.displayAwardMessages(data.xp, data.description, destinations);
-        }
-
+        await this.constructor.awardXP(data.xp, destinations)
+        await this.constructor.displayAwardMessages(data.xp, data.description, destinations);
     }
-    
-    /**
-    * Update the actors with the current EXP value.
-    * @param {integer} amount  value of EXP to grant.
-    * @param {array[actors]} destinations  text description to be displayed in chatMessage.
-    */
-    static async awardXP(amount, destinations){
-        if ( !amount || !destinations.length ) return;
-        for ( const destination of destinations ) {
-          try {
-            console.log(`PFPF2E Award XP - ${destination.name} - ${destination.system.details.xp.value}(starting) +  ${amount} (award) = ${destination.system.details.xp.value + amount} (total)`)
-            await destination.update({'system.details.xp.value': destination.system.details.xp.value + amount})
-          } catch(err) {
-            ui.notifications.warn(destination.name + ": " + err.message);
-          }
-        }
-    }
+    //await this.document.update(formData.object) // Note: formData.object
+  }
 
-    /**
-    * Send the ChatMessage from the template file.
-    * @param {integer} amount  value of EXP to grant.
-    * @param {string} description  text description to be displayed in chatMessage.
-    * @param {array[actors]} destinations  text description to be displayed in chatMessage.
-    */
-    static async displayAwardMessages(amount, description, destinations) {
-        const context = {
-            message: game.i18n.format("PF2EAXP.Award.Message",
-            {name: game.actors.party.name, award: amount, description: description }),
-            destinations:destinations
-        }
-        const content = await renderTemplate("modules/pf2e-award-xp/templates/chat/party.hbs", context);
-    
-        const messageData = {
-          type: CONST.CHAT_MESSAGE_STYLES["OTHER"],
-          content: content,
-          speaker: ChatMessage.getSpeaker({actor: this.parent}),
-          rolls: null,
-    
-        }
-        return ChatMessage.create(messageData, {});
-    }
-
-  /* -------------------------------------------- */
-  /*  Event Handling                              */
-  /* -------------------------------------------- */
-
-  /** @inheritDoc */
-  activateListeners(html) {
-    super.activateListeners(html);
-    this._validateForm();
-    
-    html.find('[name=award-type]').on( "change", function() {
-        html.find('[name=xp]')[0].value = this.selectedOptions[0].getAttribute("data-xp");  
-        const customBox = html.find (".pf2e_awardxp_description");
-        if (this.selectedOptions[0].value == "Custom"){
-           customBox[0].style.visibility = 'visible';
-        } else { 
-           customBox[0].style.visibility = 'hidden';
-        }
-      } );
-
-      
+  _onRender(context, options) {
+    super._onRender(context, options);
+    const html = this.element;
+    html.querySelector('[name=award-type]')?.addEventListener("change", function() {
+          const xpInput = html.querySelector('[name=xp]');
+          if (xpInput) xpInput.value = this.selectedOptions[0].getAttribute("data-xp");
+          
+          const customBox = html.querySelector(".pf2e_awardxp_description input");
+          
+          if (customBox) {
+            if (this.selectedOptions[0].value == "Custom"){
+              customBox.disabled = false;
+            } else { 
+              customBox.disabled = true;
+              customBox.value = this.selectedOptions[0].value;
+            }
+          }});
 
   }
 
-  /* -------------------------------------------- */
 
-  /** @inheritDoc */
-  _onChangeInput(event) {
-    super._onChangeInput(event);
-    this._validateForm();
+  /**
+  * Update the actors with the current EXP value.
+  * @param {integer} amount  value of EXP to grant.
+  * @param {array[actors]} destinations  text description to be displayed in chatMessage.
+  */
+  static async awardXP(amount, destinations){
+      if ( !amount || !destinations.length ) return;
+      if (!Number(amount)) { 
+        ui.notifications.error("Invalid Entry");
+        return;
+      }
+      for ( const destination of destinations ) {
+        try {
+          console.log(`PFPF2E Award XP - ${destination.name} - ${destination.system.details.xp.value}(starting) +  ${amount} (award) = ${destination.system.details.xp.value + parseInt(amount)} (total)`)
+          await destination.update({'system.details.xp.value': parseInt(destination.system.details.xp.value) + parseInt(amount)})
+        } catch(err) {
+          ui.notifications.warn(destination.name + ": " + err.message);
+        }
+      }
   }
 
-  _validateForm() {
-    const data = foundry.utils.expandObject(this._getSubmitData());
-    let valid = true;
-    this.form.querySelector('button[name="transfer"]').disabled = !valid;
+  /**
+  * Send the ChatMessage from the template file.
+  * @param {integer} amount  value of EXP to grant.
+  * @param {string} description  text description to be displayed in chatMessage.
+  * @param {array[actors]} destinations  text description to be displayed in chatMessage.
+  */
+  static async displayAwardMessages(amount, description, destinations) {
+      const context = {
+          message: game.i18n.format("PF2EAXP.Award.Message",
+          {name: game.actors.party.name, award: amount, description: description }),
+          destinations:destinations
+      }
+      const content = await renderTemplate("modules/pf2e-award-xp/templates/chat/party.hbs", context);
+  
+      const messageData = {
+        type: CONST.CHAT_MESSAGE_STYLES["OTHER"],
+        content: content,
+        speaker: ChatMessage.getSpeaker({actor: this.parent}),
+        rolls: null,
+  
+      }
+      return ChatMessage.create(messageData, {});
   }
 
 
@@ -308,7 +314,7 @@ class Award extends FormApplication {
 
       try {
         const { xp, description } = this.parseAwardCommand(message);
-        const award = new game.pf2e_awardxp.Award(null,{xp:parseInt(xp), description:description});
+        const award = new game.pf2e_awardxp.Award({xp:parseInt(xp), description:description});
         award.render(true);
 
       } catch(err) {
@@ -338,7 +344,7 @@ class Award extends FormApplication {
       
     let xp = options.award ?? null;
     let description = options.description ?? null;
-    const award = new game.pf2e_awardxp.Award(null,{xp:xp, description:description});
+    const award = new game.pf2e_awardxp.Award({xp:xp, description:description});
     award.render(true);
 
   }
