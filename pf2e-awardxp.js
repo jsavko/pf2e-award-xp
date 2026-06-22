@@ -258,12 +258,11 @@ class Award extends HandlebarsApplicationMixin(ApplicationV2) {
       const content = await renderTemplate("modules/pf2e-award-xp/templates/chat/party.hbs", context);
   
       const messageData = {
-        type: CONST.CHAT_MESSAGE_STYLES["OTHER"],
+        style: CONST.CHAT_MESSAGE_STYLES.OTHER,
         content: content,
-        speaker: ChatMessage.getSpeaker({actor: this.parent}),
-        rolls: null,
-  
+        speaker: ChatMessage.getSpeaker({actor: this.parent})
       }
+      
       return ChatMessage.create(messageData, {});
   }
 
@@ -296,8 +295,11 @@ class Award extends HandlebarsApplicationMixin(ApplicationV2) {
    * @returns {boolean|void}   Returns `false` to prevent the message from continuing to parse.
    */
   static chatMessage(message) {
-    if ( !this.COMMAND_PATTERN.test(message) ) return;
-    this.handleAward(message);
+    // Chat messages are posting with HTML tags now, strip those out.
+    const cleanMessage = message.replace(/<[^>]*>/g, '');
+
+    if ( !this.COMMAND_PATTERN.test(cleanMessage) ) return;
+    this.handleAward(cleanMessage);
     return false;
   }
 
