@@ -25,6 +25,7 @@ Hooks.on('preDeleteCombat', (combat,html,id) => {
 
 
 Hooks.once("init", async () => {
+  
     console.log('PF2E Award XP Init')
     game.pf2e_awardxp = {openDialog: Award.openDialog,
                         openPlayerDialog: Award.openDialog,
@@ -32,6 +33,8 @@ Hooks.once("init", async () => {
                         }
     registerCustomEnrichers();
     registerWorldSettings();
+
+  ChatLog.CHAT_COMMANDS ["award"] = new RegExp("^(?:<p>)?/award(?:xp)?(?:\\s|</p>$|$)", "i");
 
 });
 
@@ -43,8 +46,10 @@ Hooks.once("ready", async () => {
 
 Hooks.on("chatMessage", (app, message, data) => game.pf2e_awardxp.Award.chatMessage(message));
 
+
 export function registerCustomEnrichers() {
 CONFIG.TextEditor.enrichers.push({
+    id: "pf2e-award-xp",
     pattern: /\[\[\/(?<type>award) (?<config>[^\]]+)]](?:{(?<label>[^}]+)})?/gi,
     enricher: enrichAward
 })
@@ -255,10 +260,10 @@ class Award extends HandlebarsApplicationMixin(ApplicationV2) {
           {name: game.actors.party.name, award: amount, description: description }),
           destinations:destinations
       }
-      const content = await renderTemplate("modules/pf2e-award-xp/templates/chat/party.hbs", context);
+      const content = await foundry.applications.handlebars.renderTemplate("modules/pf2e-award-xp/templates/chat/party.hbs", context);
   
       const messageData = {
-        type: CONST.CHAT_MESSAGE_STYLES["OTHER"],
+        style: CONST.CHAT_MESSAGE_STYLES.OTHER,
         content: content,
         speaker: ChatMessage.getSpeaker({actor: this.parent}),
         rolls: null,
@@ -277,7 +282,7 @@ class Award extends HandlebarsApplicationMixin(ApplicationV2) {
    * Regular expression used to match the /award command in chat messages.
    * @type {RegExp}
    */
-  static COMMAND_PATTERN = new RegExp(/^\/award(?:\s|$)/i);
+  static COMMAND_PATTERN = /^(?:<p>)?\/award(?:\s|<\/p>$|$)/i;
 
   /* -------------------------------------------- */
 
@@ -307,6 +312,7 @@ class Award extends HandlebarsApplicationMixin(ApplicationV2) {
    * @param {string} message  Award command typed in chat.
    */
   static async handleAward(message) {
+       message = message.replace(/<\/?p>/g, "").replace(/^\/award\s*/i, "").trim();
     if ( !game.user.isGM ) {
         ui.notifications.error("PF2EAXP.Award.NotGMError", { localize: true });
         return;
