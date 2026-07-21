@@ -34,7 +34,6 @@ Hooks.once("init", async () => {
     registerCustomEnrichers();
     registerWorldSettings();
 
-  ChatLog.CHAT_COMMANDS ["award"] = new RegExp("^(?:<p>)?/award(?:xp)?(?:\\s|</p>$|$)", "i");
 
 });
 
@@ -181,9 +180,7 @@ class Award extends HandlebarsApplicationMixin(ApplicationV2) {
 
   static async #onSubmitForm(event, form, formData) {
     event.preventDefault()
-    console.log('click')
     const data = foundry.utils.expandObject(Object.fromEntries(formData));
-    console.log(data);
     this.form.querySelector('button[name="transfer"]').disabled = true;
     if(data['award-type'] != "Custom") {data.description = data['award-type'];}
     let destinations = []
